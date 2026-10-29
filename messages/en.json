@@ -40,7 +40,9 @@
     "modeBring": "Bring your own data",
     "modeBringBody": "Did the practical in a real lab? Type in or import your readings and get the same graph, calculations and feedback.",
     "loopTitle": "What happens in every practical",
-    "lockedNote": "Accepted values unlock only after you have analysed your own results and read your feedback."
+    "lockedNote": "Accepted values unlock only after you have analysed your own results and read your feedback.",
+    "openFile": "Open a saved session",
+    "openFailed": "That file could not be opened."
   },
   "stages": {
     "brief": "Brief",
@@ -597,6 +599,14 @@
       "generic": "Look again at: {list}.",
       "ready": "Your apparatus is set up. Time to measure.",
       "goBench": "Go to the bench"
+    },
+    "replay": {
+      "play": "Replay your session",
+      "pause": "Pause replay",
+      "restart": "Show the whole log",
+      "scrub": "Replay position",
+      "speed": "Replay speed",
+      "empty": "Nothing done on the bench yet."
     }
   },
   "reportSections": [

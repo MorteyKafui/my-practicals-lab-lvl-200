@@ -189,3 +189,29 @@ test("set-up explains wrong picks and wrong wiring before the bench unlocks", as
   await expect(page.getByText(/An ammeter goes in series/)).toBeVisible();
   await expect(stages.getByRole("button", { name: /^Measure/ })).toBeDisabled();
 });
+
+test("a session exported as .vlab opens again from the home page", async ({ page }) => {
+  await startBringMode(page);
+  await page.getByRole("button", { name: /Enter your data/ }).click();
+  await page.locator('[data-cell="f:0"]').fill("320");
+  const stages = page.getByRole("navigation", { name: "Stages" });
+  await stages.getByRole("button", { name: /^Report/ }).click();
+  const download = page.waitForEvent("download");
+  await page.getByRole("button", { name: /Export session/ }).click();
+  const path = await (await download).path();
+  await page.evaluate(() => indexedDB.deleteDatabase("physics-bench"));
+  await page.goto("/");
+  await page.locator('input[type="file"][accept*="vlab"]').setInputFiles(path!);
+  await expect(page).toHaveURL(/experiments\/stretched-wire\?s=/);
+  await stages.getByRole("button", { name: /^Observations/ }).click();
+  await expect(page.locator('[data-cell="f:0"]')).toHaveValue("320");
+});
+
+test("the lab log replays the session", async ({ page }) => {
+  await openBench(page, "stretched-wire");
+  await page.getByLabel("Total load on the wire").selectOption("4");
+  await page.getByRole("button", { name: "Place rider at middle" }).click();
+  await page.getByRole("tab", { name: "Lab log" }).click();
+  await page.getByRole("button", { name: "Replay your session" }).click();
+  await expect(page.getByText("Load set to 4 kg")).toBeVisible({ timeout: 10_000 });
+});

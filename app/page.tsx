@@ -1,10 +1,11 @@
 import { LockSimpleIcon } from "@phosphor-icons/react/dist/ssr";
 import { useTranslations } from "next-intl";
 
+import { ContinueSessions } from "@/components/lab/continue-sessions";
 import { PracticalList } from "@/components/lab/practical-list";
 import { CATALOGUE } from "@/experiments/catalogue";
 
-const LOOP = ["brief", "measure", "observations", "graph", "calculate", "feedback", "compare", "report"] as const;
+const LOOP = ["brief", "setup", "measure", "observations", "graph", "calculate", "feedback", "compare", "report"] as const;
 
 export default function HomePage() {
   const t = useTranslations();
@@ -17,6 +18,7 @@ export default function HomePage() {
         <p className="mt-1 mb-8 text-ds-body-sm text-text-muted">
           {t("home.subtitle", { ready, total: CATALOGUE.length })}
         </p>
+        <ContinueSessions />
         <PracticalList />
       </div>
 
