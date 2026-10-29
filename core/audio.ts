@@ -72,3 +72,40 @@ export function strikeFork(frequency: number, opts: { onPad: boolean; tau: numbe
     },
   };
 }
+
+/** Mains hum from an AC-driven wire: f and its second harmonic, louder as the wire resonates. */
+export function startHum(frequency: number): StruckFork | undefined {
+  const ac = audio();
+  if (!ac) return undefined;
+  const master = ac.createGain();
+  master.gain.value = 0;
+  master.gain.setTargetAtTime(1, ac.currentTime, 0.05);
+  master.connect(ac.destination);
+  const base = ac.createOscillator();
+  base.frequency.value = frequency;
+  const baseGain = ac.createGain();
+  baseGain.gain.value = 0.03;
+  const second = ac.createOscillator();
+  second.frequency.value = frequency * 2;
+  const secondGain = ac.createGain();
+  secondGain.gain.value = 0.015;
+  const wire = ac.createOscillator();
+  wire.type = "triangle";
+  wire.frequency.value = frequency;
+  const wireGain = ac.createGain();
+  wireGain.gain.value = 0;
+  base.connect(baseGain).connect(master);
+  second.connect(secondGain).connect(master);
+  wire.connect(wireGain).connect(master);
+  [base, second, wire].forEach((o) => o.start());
+  return {
+    setResonance: (level) => wireGain.gain.setTargetAtTime(Math.min(1, Math.max(0, level)) * 0.16, ac.currentTime, 0.05),
+    stop: () => {
+      master.gain.setTargetAtTime(0, ac.currentTime, 0.03);
+      setTimeout(() => {
+        [base, second, wire].forEach((o) => o.stop());
+        master.disconnect();
+      }, 300);
+    },
+  };
+}

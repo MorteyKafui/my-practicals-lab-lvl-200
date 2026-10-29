@@ -36,9 +36,11 @@ export interface SonometerProps {
   riderCm?: number;
   thrownAt?: number;
   thrownFromCm?: number;
+  /** Mass of each slotted mass on the hanger, kg. */
+  slotKg?: number;
 }
 
-export function Sonometer({ bridgeCm, loadKg, riderCm, thrownAt, thrownFromCm }: SonometerProps) {
+export function Sonometer({ bridgeCm, loadKg, riderCm, thrownAt, thrownFromCm, slotKg = 0.5 }: SonometerProps) {
   return (
     <group>
       <Box />
@@ -47,7 +49,7 @@ export function Sonometer({ bridgeCm, loadKg, riderCm, thrownAt, thrownFromCm }:
       <Bridge x={xOfCm(bridgeCm)} selected />
       <Wire bridgeCm={bridgeCm} />
       <Rider riderCm={riderCm} thrownAt={thrownAt} thrownFromCm={thrownFromCm} />
-      <Load kg={loadKg} />
+      <Load kg={loadKg} slotKg={slotKg} />
     </group>
   );
 }
@@ -204,8 +206,8 @@ function Rider({ riderCm, thrownAt, thrownFromCm }: { riderCm?: number; thrownAt
 }
 
 /** Hanger (0.5 kg) and 0.5 kg slotted masses over the pulley. */
-function Load({ kg }: { kg?: number }) {
-  const slots = kg ? Math.max(0, Math.round((kg - 0.5) / 0.5)) : 0;
+function Load({ kg, slotKg }: { kg?: number; slotKg: number }) {
+  const slots = kg ? Math.max(0, Math.round((kg - 0.5) / slotKg)) : 0;
   if (kg === undefined) return null;
   return (
     <group position={[0.618, -0.2, SONO.WIRE_Z]}>
@@ -218,8 +220,8 @@ function Load({ kg }: { kg?: number }) {
         <meshStandardMaterial color="#8a9096" metalness={0.8} roughness={0.3} />
       </mesh>
       {Array.from({ length: slots }, (_, i) => (
-        <mesh key={i} position={[0, -0.075 + i * 0.011, 0]}>
-          <cylinderGeometry args={[0.03, 0.03, 0.01, 32]} />
+        <mesh key={i} position={[0, -0.08 + 0.01 * slotKg + i * (0.02 * slotKg + 0.001), 0]}>
+          <cylinderGeometry args={[0.03, 0.03, 0.02 * slotKg, 32]} />
           <meshStandardMaterial color={i % 2 ? "#8c7a4a" : "#9d8a55"} metalness={0.5} roughness={0.45} />
         </mesh>
       ))}

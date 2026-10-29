@@ -20,7 +20,9 @@ export type QuantityKind =
   | "inverse-length"
   | "inverse-frequency"
   | "length-squared"
-  | "inverse-frequency-squared";
+  | "inverse-frequency-squared"
+  | "linear-density"
+  | "area";
 
 export interface UnitDef {
   symbol: string;
@@ -94,6 +96,15 @@ export const UNITS: Record<QuantityKind, UnitDef[]> = {
     { symbol: "cm²", toSI: 1e-4 },
   ],
   "inverse-frequency-squared": [{ symbol: "s²", toSI: 1 }],
+  "linear-density": [
+    { symbol: "kg m⁻¹", toSI: 1 },
+    { symbol: "g m⁻¹", toSI: 1e-3 },
+  ],
+  area: [
+    { symbol: "m²", toSI: 1 },
+    { symbol: "cm²", toSI: 1e-4 },
+    { symbol: "mm²", toSI: 1e-6 },
+  ],
 };
 
 export function findUnit(kind: QuantityKind, symbol: string): UnitDef | undefined {

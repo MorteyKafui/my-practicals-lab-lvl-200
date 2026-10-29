@@ -2,7 +2,7 @@ import { expect, test } from "bun:test";
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 
-import en from "@/messages/en.json";
+import { MESSAGES_EN as en } from "@/experiments/messages";
 
 /** Every feedback key a rule can emit must have a title and a detail in English. */
 test("all feedback keys have messages", () => {

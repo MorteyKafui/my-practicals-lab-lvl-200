@@ -1,7 +1,8 @@
 import type { FeedbackRule, Finding } from "@/core/feedback";
-import { classifySlip, METRE_RULE } from "@/core/instruments";
+import { METRE_RULE } from "@/core/instruments";
 
 import { getCatalogueEntry } from "../catalogue";
+import { approachesRule, transcriptionRule } from "../shared-rules";
 import type { ExperimentDefinition } from "../types";
 import { createWorld, FIXED_BRIDGE_CM, idealReadings, type StretchedWireWorld } from "./model";
 
@@ -51,22 +52,6 @@ const inverseInCm: FeedbackRule = {
   },
 };
 
-/** The two approaches to resonance should agree within a few millimetres. */
-const approachesDisagree: FeedbackRule = {
-  id: "stretched-approaches",
-  stage: "observations",
-  check: ({ completeRows }) => {
-    const rows = completeRows.filter((r) => {
-      const a = r.cells.l1?.si;
-      const b = r.cells.l2?.si;
-      return a !== undefined && b !== undefined && Math.abs(a - b) > 0.008;
-    });
-    if (rows.length) return [{ rule: "stretched-approaches", severity: "warning", stage: "observations", key: "stretched.approachesDisagree", rows: rows.map((r) => r.id) }];
-    const identical = completeRows.length >= 3 && completeRows.every((r) => r.cells.l1?.raw && r.cells.l1.raw === r.cells.l2?.raw);
-    return identical ? [{ rule: "stretched-approaches", severity: "tip", stage: "observations", key: "stretched.approachesIdentical" }] : [];
-  },
-};
-
 /** Perform mode: forks struck on the bench instead of the rubber pad. */
 const struckOnBench: FeedbackRule = {
   id: "stretched-struck-bench",
@@ -74,35 +59,6 @@ const struckOnBench: FeedbackRule = {
   check: ({ actions }) => {
     const n = actions.filter((a) => a.kind === "strike-fork" && a.detail?.surface === "bench").length;
     return n ? [{ rule: "stretched-struck-bench", severity: "warning", stage: "measure", key: "stretched.struckOnBench", params: { n } }] : [];
-  },
-};
-
-/**
- * Perform mode: each reading typed while on the bench is logged with where the bridge was when
- * the rider was last thrown. Compare the two (in cm) to catch the classic slips.
- */
-const transcription: FeedbackRule = {
-  id: "stretched-transcription",
-  stage: "measure",
-  check: ({ actions, session }) => {
-    const findings: Finding[] = [];
-    const unitOfL = session.units.l1 ?? "cm";
-    const toCm = unitOfL === "m" ? 100 : unitOfL === "mm" ? 0.1 : 1;
-    let scaleReadings = 0;
-    let transposed = 0;
-    for (const a of actions) {
-      if (a.kind !== "record") continue;
-      const thrownAt = Number(a.detail?.lastThrownCm);
-      const typed = Number(a.detail?.typed) * toCm;
-      if (!(thrownAt > 0) || !Number.isFinite(typed)) continue;
-      const length = thrownAt - FIXED_BRIDGE_CM;
-      if (Math.abs(typed - thrownAt) <= 0.25 && Math.abs(typed - length) > 1) scaleReadings++;
-      else if (classifySlip(typed, Math.round(length * 10) / 10, 0.1).kind === "transposed-digits") transposed++;
-    }
-    if (scaleReadings)
-      findings.push({ rule: "stretched-transcription", severity: "error", stage: "measure", key: "stretched.scaleNotLength", params: { n: scaleReadings, fixed: FIXED_BRIDGE_CM.toFixed(1) } });
-    if (transposed) findings.push({ rule: "stretched-transcription", severity: "warning", stage: "measure", key: "stretched.transposed", params: { n: transposed } });
-    return findings;
   },
 };
 
@@ -154,7 +110,7 @@ export const stretchedWire: ExperimentDefinition<StretchedWireWorld> = {
     ...world.forks.map((f) => ({ label: `Fork stamped ${f.nominal} Hz`, value: `${f.actual.toFixed(1)} Hz` })),
     { label: "Tension lost to pulley friction", value: `${(world.pulleyLoss * 100).toFixed(1)} %` },
   ],
-  rules: [harmonicSlip, inverseInCm, approachesDisagree, struckOnBench, transcription],
+  rules: [harmonicSlip, inverseInCm, approachesRule("l1", "l2"), struckOnBench, transcriptionRule(FIXED_BRIDGE_CM)],
   describeAction: (action) => {
     const d = action.detail ?? {};
     switch (action.kind) {

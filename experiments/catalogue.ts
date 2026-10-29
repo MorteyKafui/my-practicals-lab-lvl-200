@@ -79,7 +79,7 @@ export const CATALOGUE: readonly CatalogueEntry[] = [
   {
     id: "ac-sonometer",
     topic: "electromagnetism",
-    status: "building",
+    status: "ready",
     apparatus: ["Sonometer", "Step-down transformer", "Horseshoe magnet", "Slotted masses"],
     graph: { y: "l² / m²", x: "T / N" },
     determines: "f, mains frequency",

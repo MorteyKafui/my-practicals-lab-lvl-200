@@ -152,7 +152,7 @@ export function StretchedWireBench({ world: rawWorld, conditions, session, act }
   );
 }
 
-export function LoadCard({ loadKg, onChange }: { loadKg?: number; onChange: (kg: number) => void }) {
+export function LoadCard({ loadKg, onChange, loads = LOADS, slotKg = 0.5 }: { loadKg?: number; onChange: (kg: number) => void; loads?: number[]; slotKg?: number }) {
   return (
     <InstrumentCard title="Load">
       <select
@@ -164,13 +164,13 @@ export function LoadCard({ loadKg, onChange }: { loadKg?: number; onChange: (kg:
         <option value="" disabled>
           Choose…
         </option>
-        {LOADS.map((kg) => (
+        {loads.map((kg) => (
           <option key={kg} value={kg}>
-            {kg.toFixed(1)} kg
+            {kg.toFixed(2)} kg
           </option>
         ))}
       </select>
-      <span className="text-[11px] text-text-muted">hanger 0.5 kg + slotted masses</span>
+      <span className="text-[11px] text-text-muted">hanger 0.5 kg + {slotKg} kg slotted masses</span>
     </InstrumentCard>
   );
 }

@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { useMemo, type ComponentType } from "react";
 
+import { AcSonometerBench } from "@/experiments/ac-sonometer/bench";
 import { StretchedWireBench } from "@/experiments/stretched-wire/bench-ui";
 import type { BenchProps } from "@/experiments/types";
 
@@ -13,6 +14,7 @@ import { ConstantsFields } from "./observations";
 /** Interactive benches by experiment id (client-only; this module is loaded with ssr: false). */
 const BENCHES: Record<string, ComponentType<BenchProps>> = {
   "stretched-wire": StretchedWireBench,
+  "ac-sonometer": AcSonometerBench,
 };
 
 /** The bench on top, the student's notebook right under it — read the instrument, write it down. */

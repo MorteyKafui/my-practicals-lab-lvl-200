@@ -1,3 +1,4 @@
+import { acSonometer } from "./ac-sonometer/definition";
 import { stretchedWire } from "./stretched-wire/definition";
 import type { ExperimentDefinition } from "./types";
 
@@ -7,6 +8,7 @@ import type { ExperimentDefinition } from "./types";
  */
 const DEFINITIONS: Record<string, ExperimentDefinition> = {
   [stretchedWire.entry.id]: stretchedWire as ExperimentDefinition,
+  [acSonometer.entry.id]: acSonometer as ExperimentDefinition,
 };
 
 export function getDefinition(id: string): ExperimentDefinition | undefined {

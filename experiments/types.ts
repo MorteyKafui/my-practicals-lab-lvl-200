@@ -49,7 +49,7 @@ export interface ResultSpec<World> {
   /** From the student's own line (slope, intercept) and conditions. */
   fromFit: (fit: { slope: number; intercept: number }, ctx: ResultContext) => number;
   /** The accepted or true value; shown only once Compare unlocks. */
-  accepted(world: World | undefined, conditions: Conditions): number | undefined;
+  accepted(world: World | undefined, conditions: Conditions, constants: Readonly<Record<string, number>>): number | undefined;
   /** A result within this % of accepted is "good agreement" for this practical. */
   goodWithinPercent: number;
 }
@@ -58,6 +58,8 @@ export interface ResultContext {
   conditions: Conditions;
   /** Constants the student recorded once for the whole practical (tension, temperature…). */
   constants: Readonly<Record<string, number>>;
+  /** The complete rows of the table, SI values by column id. */
+  rows: readonly Readonly<Record<string, number>>[];
 }
 
 export interface ConstantSpec {

@@ -1,7 +1,6 @@
-import { forwardRef } from "react";
 
 /** Labelled side view of the sonometer set-up, as a student would draw it in a report. */
-export const SonometerDiagram = forwardRef<SVGSVGElement, { className?: string }>(function SonometerDiagram({ className }, ref) {
+export function SonometerDiagram({ className, ref, variant = "fork" }: DiagramProps & { variant?: "fork" | "ac" }) {
   const ink = "#111111";
   return (
     <svg ref={ref} viewBox="0 0 640 300" className={className} role="img" aria-label="Diagram of the sonometer set-up" fontFamily="Inter, Arial, sans-serif" fontSize="12">
@@ -24,8 +23,16 @@ export const SonometerDiagram = forwardRef<SVGSVGElement, { className?: string }
       <rect x="558" y="236" width="32" height="10" fill="none" stroke={ink} />
       <rect x="558" y="246" width="32" height="10" fill="none" stroke={ink} />
       <rect x="558" y="256" width="32" height="10" fill="none" stroke={ink} />
-      {/* Tuning fork pressed on box */}
-      <path d="M180 150 L180 136 M174 136 L174 92 M186 136 L186 92 M174 136 Q180 142 186 136" fill="none" stroke={ink} strokeWidth="1.5" />
+      {variant === "fork" ? (
+        <path d="M180 150 L180 136 M174 136 L174 92 M186 136 L186 92 M174 136 Q180 142 186 136" fill="none" stroke={ink} strokeWidth="1.5" />
+      ) : (
+        <g fill="none" stroke={ink} strokeWidth="1.5">
+          {/* Horseshoe magnet straddling the wire, transformer feeding the wire ends */}
+          <path d="M236 150 L236 104 Q245 96 254 104 L254 150" />
+          <rect x="20" y="40" width="70" height="40" />
+          <path d="M55 80 L55 128 L44 128 M90 60 L590 60 L590 128" strokeDasharray="4 3" />
+        </g>
+      )}
       {/* Length l */}
       <line x1="100" y1="96" x2="390" y2="96" stroke={ink} markerStart="url(#a)" markerEnd="url(#a)" />
       <defs>
@@ -39,8 +46,8 @@ export const SonometerDiagram = forwardRef<SVGSVGElement, { className?: string }
         <text x="60" y="240">Sonometer box</text>
         <text x="66" y="118">Fixed bridge</text>
         <text x="400" y="118">Movable bridge</text>
-        <text x="215" y="72">Paper rider at middle</text>
-        <text x="150" y="80" textAnchor="end">Tuning fork</text>
+        <text x="215" y="72">{variant === "fork" ? "Paper rider at middle" : "Magnet and rider at middle"}</text>
+        {variant === "fork" ? <text x="150" y="80" textAnchor="end">Tuning fork</text> : <text x="24" y="34">Step-down transformer (AC)</text>}
         <text x="600" y="150">Pulley</text>
         <text x="600" y="256">Load M</text>
         <text x="40" y="285" fill="#5a5042">Metre rule fixed along the box (not shown)</text>
@@ -48,8 +55,14 @@ export const SonometerDiagram = forwardRef<SVGSVGElement, { className?: string }
       <line x1="245" y1="76" x2="245" y2="112" stroke={ink} strokeWidth="0.6" />
     </svg>
   );
-});
+}
 
-export const DIAGRAMS: Record<string, typeof SonometerDiagram> = {
+export interface DiagramProps {
+  className?: string;
+  ref?: React.Ref<SVGSVGElement>;
+}
+
+export const DIAGRAMS: Record<string, (props: DiagramProps) => React.ReactNode> = {
   "stretched-wire": SonometerDiagram,
+  "ac-sonometer": (props) => <SonometerDiagram {...props} variant="ac" />,
 };

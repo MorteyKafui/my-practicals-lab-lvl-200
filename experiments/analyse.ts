@@ -118,14 +118,19 @@ export function analyse(def: ExperimentDefinition, session: Session): Analysis {
 
   const world = session.mode === "perform" ? def.createWorld(session.seed, session.environment) : undefined;
   const constants = parseConstants(def, session);
+  const rowsSI = complete.map((r) => Object.fromEntries(Object.entries(r.cells).flatMap(([id, c]) => (c.si === undefined ? [] : [[id, c.si]]))));
   const results = def.results.map((r) => ({
     id: r.id,
     symbol: r.symbol,
     unit: r.unit,
-    value: studentSI ? r.fromFit(studentSI, { conditions, constants }) : undefined,
-    accepted: r.accepted(world, conditions),
+    value: finite(studentSI ? r.fromFit(studentSI, { conditions, constants, rows: rowsSI }) : undefined),
+    accepted: r.accepted(world, conditions, constants),
     goodWithinPercent: r.goodWithinPercent,
   }));
 
   return { context, findings, results, studentSI, conditions };
+}
+
+function finite(v: number | undefined): number | undefined {
+  return v !== undefined && Number.isFinite(v) ? v : undefined;
 }

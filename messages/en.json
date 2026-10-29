@@ -104,6 +104,10 @@
         "Read the rule square-on (Eye level view) to avoid parallax.",
         "Near resonance, move the bridge in small steps and strike the fork again: the rider only jumps while the fork is loud.",
         "If the rider is thrown at a length much longer than expected, the wire may be vibrating in two loops."
+      ],
+      "references": [
+        "Young, H. D. & Freedman, R. A. University Physics, ch. 15: Mechanical waves (standing waves on a string).",
+        "Physics Bench virtual laboratory — sonometer practical."
       ]
     },
     "resonance-tube-two": {

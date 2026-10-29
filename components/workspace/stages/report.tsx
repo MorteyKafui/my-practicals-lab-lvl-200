@@ -60,10 +60,9 @@ export function ReportStage({ ctx, definition, analysis }: StageProps) {
       precautions: listItems(session.writing.precautions),
       sourcesOfError: listItems(session.writing.sourcesOfError),
       conclusion: session.writing.conclusion,
-      references: [
-        "Physics Bench virtual laboratory — sonometer practical.",
-        "Young, H. D. & Freedman, R. A. University Physics, ch. 15 (mechanical waves, standing waves on a string).",
-      ],
+      references: tx.has("references")
+        ? (tx.raw("references") as string[])
+        : ["Physics Bench virtual laboratory.", "Young, H. D. & Freedman, R. A. University Physics (Pearson)."],
       footer: `${session.mode === "perform" ? "Performed on the Physics Bench virtual bench" : `Data from: ${session.source || "student's own laboratory readings"}`} · session #${session.seed}`,
     };
   }, [session, definition, analysis, tx, format, student]);
