@@ -607,6 +607,13 @@
       "scrub": "Replay position",
       "speed": "Replay speed",
       "empty": "Nothing done on the bench yet."
+    },
+    "ai": {
+      "title": "Feedback from Claude (optional)",
+      "intro": "Claude reads your discussion, precautions, sources of error and conclusion and says what a marker would want improved. It never writes them for you. Needs an internet connection and your own API key.",
+      "ask": "Ask Claude for feedback",
+      "asking": "Reading your writing…",
+      "setUp": "Add your Claude API key in Settings"
     }
   },
   "reportSections": [
@@ -791,6 +798,14 @@
       "up": "Move {title} up",
       "down": "Move {title} down",
       "reset": "Back to the 15-section format"
+    },
+    "ai": {
+      "title": "AI feedback (optional)",
+      "intro": "With your own Claude API key, the Discussion stage can ask Claude for feedback on your writing. Everything else in the lab works without it, offline.",
+      "key": "Claude API key",
+      "save": "Save key",
+      "remove": "Remove key",
+      "privacy": "The key is stored only in this browser and sent only to Anthropic's API. Don't save it on a shared computer. Each request is billed to your Anthropic account."
     }
   }
 }

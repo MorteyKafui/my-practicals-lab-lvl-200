@@ -227,3 +227,41 @@ test("the report follows the school's report template", async ({ page }) => {
   expect(headings.some((h) => h.includes("Theory"))).toBe(false);
   expect(headings).toHaveLength(14);
 });
+
+test("optional AI feedback: the right request, shown to the student, refusals handled", async ({ page }) => {
+  await page.goto("/settings");
+  await page.getByLabel("Claude API key").fill("sk-ant-test-key-0000");
+  await page.getByRole("button", { name: "Save key" }).click();
+  let body: Record<string, unknown> = {};
+  let headers: Record<string, string> = {};
+  let refuse = false;
+  await page.route("https://api.anthropic.com/**", async (route) => {
+    body = route.request().postDataJSON();
+    headers = route.request().headers();
+    await route.fulfill({
+      contentType: "application/json",
+      json: {
+        id: "msg_test",
+        type: "message",
+        role: "assistant",
+        model: "claude-opus-5-5",
+        content: refuse ? [] : [{ type: "text", text: "Discussion:\n- What does your intercept tell you?" }],
+        stop_reason: refuse ? "refusal" : "end_turn",
+        stop_sequence: null,
+        usage: { input_tokens: 10, output_tokens: 10 },
+      },
+    });
+  });
+  await startBringMode(page);
+  await page.getByRole("navigation", { name: "Stages" }).getByRole("button", { name: /^Discussion/ }).click();
+  await page.getByLabel(/^Discussion/).first().fill("f is proportional to 1/l.");
+  await page.getByRole("button", { name: "Ask Claude for feedback" }).click();
+  await expect(page.getByText("What does your intercept tell you?")).toBeVisible();
+  expect(body.model).toBe("claude-opus-5-5");
+  expect(body.fallbacks).toBe("default");
+  expect(headers["anthropic-beta"]).toContain("server-side-fallback-2026-07-01");
+  expect(JSON.stringify(body)).toContain("f is proportional to 1/l.");
+  refuse = true;
+  await page.getByRole("button", { name: "Ask Claude for feedback" }).click();
+  await expect(page.getByText("Claude could not give feedback on this text.")).toBeVisible();
+});
