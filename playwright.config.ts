@@ -7,7 +7,7 @@ export default defineConfig({
   fullyParallel: false,
   reporter: [["list"]],
   use: {
-    baseURL: "http://localhost:4173",
+    baseURL: process.env.E2E_URL ?? "http://localhost:4173",
     channel: "chrome",
     trace: "retain-on-failure",
   },
@@ -15,8 +15,8 @@ export default defineConfig({
     { name: "desktop", use: { ...devices["Desktop Chrome"], channel: "chrome", viewport: { width: 1440, height: 900 } } },
   ],
   webServer: {
-    command: "bunx serve out -l 4173 --no-clipboard",
-    url: "http://localhost:4173",
+    command: process.env.E2E_URL ? "bun run dev" : "bunx serve out -l 4173 --no-clipboard",
+    url: process.env.E2E_URL ?? "http://localhost:4173",
     reuseExistingServer: true,
     timeout: 60_000,
   },

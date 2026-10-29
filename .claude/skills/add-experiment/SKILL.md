@@ -70,10 +70,15 @@ Run `bun run test`.
 
 ## 6. 3D bench — `experiments/<id>/bench.tsx` + `bench-ui.tsx`
 
-- R3F scene: orthographic isometric camera, flat/toon-ish standard materials, `ContactShadows`
-  (skip on low quality), callout labels via drei `Html`. Build apparatus procedurally (no
-  downloaded models, no drei `Text` — it fetches fonts and breaks offline); draw scales on a
-  `CanvasTexture`.
+- Build on the shared kit in `components/bench/kit.tsx`: `BenchShell` (status line, eye-level
+  and label toggles, instrument cards — overlaid from md up, stacked below the canvas on phones)
+  and `BenchCanvas` (lights, isometric camera `home`, `eye` pose, shadows by quality, callouts).
+  Callouts are `{ label, at }` anchors projected to DOM labels each frame. **Do not use drei
+  `<Html>`** — it mounts a React root per label and crashes when unmounted mid-render. Do not use
+  drei `Text` either (it fetches fonts and breaks offline); draw scales with `makeRuleTexture`.
+- Per-frame values shared between the driver and the 3D parts go through `components/bench/signal.ts`,
+  not refs passed as props (React Compiler lint). Reusable apparatus lives in `components/bench/`
+  (e.g. `sonometer.tsx`).
 - **Never show the measured value as a number.** The student reads the instrument: provide an
   eye-level/close-up view for scales, a graticule for oscilloscopes, a needle for meters.
 - Instrument cards (HTML over the canvas from md up, below it on phones) for the controls;

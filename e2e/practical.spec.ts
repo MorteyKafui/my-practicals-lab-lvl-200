@@ -132,3 +132,27 @@ test("works offline after the first visit", async ({ page, context }) => {
   await expect(page.getByRole("heading", { name: /Resonant frequency of a stretched wire/ })).toBeVisible();
   await context.setOffline(false);
 });
+
+test("bench survives toggling labels, views and leaving the stage without errors", async ({ page }) => {
+  const errors: string[] = [];
+  page.on("pageerror", (e) => errors.push(e.message));
+  page.on("console", (m) => m.type() === "error" && errors.push(m.text()));
+
+  await page.goto("/experiments/stretched-wire");
+  await page.getByRole("button", { name: /Perform it on the bench/ }).click();
+  await page.getByRole("button", { name: /Go to the bench/ }).click();
+  await expect(page.locator("canvas")).toBeVisible({ timeout: 20_000 });
+  const labels = page.getByRole("button", { name: "Show labels" });
+  for (let i = 0; i < 2; i++) {
+    await labels.click();
+    await page.getByRole("button", { name: "Eye level at bridge" }).click();
+    await page.getByRole("button", { name: "Bench view" }).click();
+  }
+  const stages = page.getByRole("navigation", { name: "Stages" });
+  await stages.getByRole("button", { name: /^Observations/ }).click();
+  await stages.getByRole("button", { name: /^Measure/ }).click();
+  await expect(page.locator("canvas")).toBeVisible();
+  await stages.getByRole("button", { name: /^Brief/ }).click();
+  await page.waitForTimeout(500);
+  expect(errors.filter((e) => !/Download the React DevTools/.test(e))).toEqual([]);
+});
