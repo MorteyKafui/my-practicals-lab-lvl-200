@@ -1,0 +1,54 @@
+{
+  "experiments": {
+    "helmholtz": {
+      "theory": [
+        "A flask with a narrow neck is a Helmholtz resonator: the plug of air in the neck oscillates on the spring of the air in the bulb. Its resonant frequency is",
+        "$$f = \\frac{c}{2\\pi}\\sqrt{\\frac{A}{V L'}}$$",
+        "where $c$ is the speed of sound, $A$ the neck's cross-sectional area, $V$ the air volume and $L'$ the neck length plus its end corrections.",
+        "Adding a volume $V_w$ of water leaves air volume $V = V_0 - V_w$, so $\\dfrac{1}{f^{2}} = \\dfrac{4\\pi^{2}L'}{c^{2}A}\\,(V_0 - V_w)$: a straight line against $V_w$ with a negative slope that meets the $V_w$-axis at $V_0$.",
+        "That line is the calibration: measure the resonant frequency for an unknown amount of water and read its volume from the line."
+      ],
+      "apparatus": {
+        "flask": "Flask resonator: a round flask with a narrow neck.",
+        "cylinder": "Measuring cylinder: 100 ml with 1 ml graduations.",
+        "generator": "Signal generator with a frequency display.",
+        "speaker": "Small loudspeaker held at the mouth of the flask.",
+        "thermometer": "Thermometer for the air temperature (for the speed of sound)."
+      },
+      "safety": [
+        "Keep water away from the signal generator and its leads.",
+        "Keep the loudspeaker volume low; long exposure to loud tones is harmful."
+      ],
+      "steps": [
+        "Switch on the loudspeaker at the mouth of the empty flask.",
+        "Sweep the frequency slowly to find where the sound is loudest. Record V_w = 0 and f.",
+        "Fill the measuring cylinder, read it at the bottom of the meniscus, and pour the water into the flask.",
+        "Find the new resonant frequency. Record the total volume of water added and f.",
+        "Repeat until the flask is about two-thirds full (at least six readings).",
+        "Empty the flask, pour in the unknown sample and record its resonant frequency as f (unknown).",
+        "Work out 1/f², plot 1/f² against V_w, and use the line to find V₀ and the unknown volume."
+      ],
+      "tips": [
+        "Keep a running total of the water you have poured in.",
+        "Sweep up and down through the resonance: the loudest point is easier to find from both sides.",
+        "1/f² is small: write it in standard form, e.g. 2.84 × 10⁻⁵ s²."
+      ],
+      "references": [
+        "Kinsler, L. E. et al. Fundamentals of Acoustics, ch. 10 (the Helmholtz resonator).",
+        "Physics Bench virtual laboratory — narrow-neck resonator practical."
+      ]
+    }
+  },
+  "feedback": {
+    "helmholtz": {
+      "frequencyFalls": {
+        "title": "The frequency falls as water is added",
+        "detail": "More water leaves less air in the bulb, so the resonant frequency should rise. Re-check these readings and your running total of water."
+      },
+      "noUnknown": {
+        "title": "Use your calibration",
+        "detail": "Measure the resonant frequency of the unknown sample and record it as f (unknown); your result will read its volume off your line."
+      }
+    }
+  }
+}

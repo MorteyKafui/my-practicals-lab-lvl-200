@@ -1,3 +1,4 @@
+import { HelmholtzDiagram } from "./helmholtz-diagram";
 import { TubeDiagram } from "./tube-diagram";
 
 /** Labelled side view of the sonometer set-up, as a student would draw it in a report. */
@@ -68,4 +69,5 @@ export const DIAGRAMS: Record<string, (props: DiagramProps) => React.ReactNode> 
   "ac-sonometer": (props) => <SonometerDiagram {...props} variant="ac" />,
   "resonance-tube-two": (props) => <TubeDiagram {...props} />,
   "resonance-tube-forks": (props) => <TubeDiagram {...props} second={false} />,
+  helmholtz: HelmholtzDiagram,
 };

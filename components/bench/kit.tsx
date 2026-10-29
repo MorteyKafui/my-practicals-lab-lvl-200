@@ -59,6 +59,9 @@ export function BenchCanvas({
       gl={{ antialias: quality !== "low", preserveDrawingBuffer: true }}
       className="touch-none"
       aria-label={label}
+      onCreated={({ gl }) => {
+        gl.localClippingEnabled = true;
+      }}
     >
       <color attach="background" args={["#f5f6f2"]} />
       <ambientLight intensity={1.1} />

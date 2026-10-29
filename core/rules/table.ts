@@ -146,7 +146,11 @@ export const unitSlip: FeedbackRule = {
       const sorted = values.map((x) => x.v).sort((a, b) => a - b);
       const median = sorted[Math.floor(sorted.length / 2)]!;
       for (const { id, v } of values) {
-        const factor = suspectedUnitSlip(v, median);
+        // A slip sits well outside the range of the column's other values, not just far from the median
+        // (a volume column running 0, 50 … 350 is a wide range, not a slip).
+        const others = values.filter((x) => x.id !== id && x.v !== 0).map((x) => Math.abs(x.v));
+        const outside = v !== 0 && others.length > 0 && (Math.abs(v) < Math.min(...others) / 6 || Math.abs(v) > Math.max(...others) * 6);
+        const factor = outside ? suspectedUnitSlip(v, median) : undefined;
         if (factor)
           findings.push({
             rule: "table-unit-slip",

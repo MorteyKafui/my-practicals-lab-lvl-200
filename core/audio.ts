@@ -109,3 +109,34 @@ export function startHum(frequency: number): StruckFork | undefined {
     },
   };
 }
+
+export interface Tone extends StruckFork {
+  setFrequency: (f: number) => void;
+}
+
+/** A loudspeaker driven by a signal generator: a steady tone, louder when the cavity resonates. */
+export function startTone(frequency: number): Tone | undefined {
+  const ac = audio();
+  if (!ac) return undefined;
+  const master = ac.createGain();
+  master.gain.value = 0;
+  master.gain.setTargetAtTime(1, ac.currentTime, 0.05);
+  master.connect(ac.destination);
+  const osc = ac.createOscillator();
+  osc.frequency.value = frequency;
+  const gain = ac.createGain();
+  gain.gain.value = 0.02;
+  osc.connect(gain).connect(master);
+  osc.start();
+  return {
+    setFrequency: (f) => osc.frequency.setTargetAtTime(f, ac.currentTime, 0.02),
+    setResonance: (level) => gain.gain.setTargetAtTime(0.02 + Math.min(1, Math.max(0, level)) * 0.16, ac.currentTime, 0.05),
+    stop: () => {
+      master.gain.setTargetAtTime(0, ac.currentTime, 0.03);
+      setTimeout(() => {
+        osc.stop();
+        master.disconnect();
+      }, 300);
+    },
+  };
+}

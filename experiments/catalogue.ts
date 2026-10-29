@@ -47,7 +47,7 @@ export const CATALOGUE: readonly CatalogueEntry[] = [
   {
     id: "helmholtz",
     topic: "acoustics",
-    status: "building",
+    status: "ready",
     apparatus: ["Flask resonator", "Measuring cylinder", "Signal generator", "Loudspeaker"],
     graph: { y: "1/f² / s²", x: "V / m³" },
     determines: "calibration line, unknown volume",
