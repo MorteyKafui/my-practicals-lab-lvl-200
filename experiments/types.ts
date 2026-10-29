@@ -3,6 +3,7 @@ import type { Conditions, Environment } from "@/core/environment";
 import type { FeedbackRule } from "@/core/feedback";
 import type { InstrumentSpec } from "@/core/instruments";
 import type { Session } from "@/core/session";
+import type { SetupSpec } from "@/core/setup";
 import type { QuantityKind } from "@/core/units";
 
 import type { CatalogueEntry } from "./catalogue";
@@ -81,6 +82,8 @@ export interface BenchProps {
 
 export interface ExperimentDefinition<World = unknown> {
   entry: CatalogueEntry;
+  /** The do-it-yourself set-up: apparatus shelf and (optionally) the circuit to wire. */
+  setup?: SetupSpec;
   /** Values recorded once for the whole practical (e.g. the hanging mass), shown above the table. */
   constants: ConstantSpec[];
   columns: ColumnSpec[];

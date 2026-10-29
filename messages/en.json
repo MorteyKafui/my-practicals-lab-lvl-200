@@ -40,7 +40,9 @@
     "modeBring": "Bring your own data",
     "modeBringBody": "Did the practical in a real lab? Type in or import your readings and get the same graph, calculations and feedback.",
     "loopTitle": "What happens in every practical",
-    "lockedNote": "Accepted values unlock only after you have analysed your own results and read your feedback."
+    "lockedNote": "Accepted values unlock only after you have analysed your own results and read your feedback.",
+    "openFile": "Open a saved session",
+    "openFailed": "That file could not be opened."
   },
   "stages": {
     "brief": "Brief",
@@ -58,7 +60,8 @@
       "needRows": "Record at least 3 complete readings first.",
       "needLine": "Draw your best-fit line on the graph first.",
       "needSlope": "Calculate your slope first.",
-      "needFeedback": "Read your feedback first — then compare with the accepted values."
+      "needFeedback": "Read your feedback first — then compare with the accepted values.",
+      "needSetup": "Set up the apparatus first."
     }
   },
   "progress": {
@@ -108,42 +111,119 @@
       "references": [
         "Young, H. D. & Freedman, R. A. University Physics, ch. 15: Mechanical waves (standing waves on a string).",
         "Physics Bench virtual laboratory — sonometer practical."
-      ]
+      ],
+      "setup": {
+        "why": {
+          "voltmeter": "Nothing electrical is measured: the frequency is stamped on each fork and the length is read on the rule.",
+          "stopwatch": "No timing is needed — the fork's frequency is known.",
+          "horseshoe-magnet": "A magnet drives the wire in the AC-sonometer practical. Here the fork drives it."
+        }
+      }
     },
     "resonance-tube-two": {
       "short": "Velocity of sound: resonance tube",
       "title": "Velocity of sound in air by resonance tube",
-      "aim": "To determine the velocity of sound in air from the first and second resonance positions of a tube closed at one end, and to find the end correction."
+      "aim": "To determine the velocity of sound in air from the first and second resonance positions of a tube closed at one end, and to find the end correction.",
+      "setup": {
+        "why": {
+          "signal-generator": "A tuning fork gives the known frequency here; the signal generator is for the narrow-neck resonator.",
+          "measuring-cylinder": "You measure lengths of the air column, not volumes.",
+          "stopwatch": "No timing is needed."
+        }
+      }
     },
     "resonance-tube-forks": {
       "short": "Velocity of sound: several forks",
       "title": "Velocity of sound in an air column closed at one end",
-      "aim": "To determine the velocity of sound in air and the end correction of a closed tube using tuning forks of different frequencies."
+      "aim": "To determine the velocity of sound in air and the end correction of a closed tube using tuning forks of different frequencies.",
+      "setup": {
+        "why": {
+          "signal-generator": "A tuning fork gives the known frequency here; the signal generator is for the narrow-neck resonator.",
+          "measuring-cylinder": "You measure lengths of the air column, not volumes.",
+          "stopwatch": "No timing is needed."
+        }
+      }
     },
     "helmholtz": {
       "short": "Narrow-neck resonator",
       "title": "Calibration of a narrow-neck (Helmholtz) resonator",
-      "aim": "To calibrate a narrow-neck resonator by measuring its resonant frequency for different air volumes, and to use the calibration to find an unknown volume."
+      "aim": "To calibrate a narrow-neck resonator by measuring its resonant frequency for different air volumes, and to use the calibration to find an unknown volume.",
+      "setup": {
+        "why": {
+          "tuning-forks": "Forks give a few fixed frequencies; you need to sweep the frequency continuously to find each resonance.",
+          "metre-rule": "Volumes come from the measuring cylinder; no lengths are measured.",
+          "oscilloscope": "Not needed: you judge the loudest sound by ear (or on the sound-level meter)."
+        },
+        "hints": {
+          "speaker": "Connect the generator's output to the loudspeaker: output to + and earth (⏚) to −."
+        }
+      }
     },
     "faraday": {
       "short": "Faraday's law of induction",
       "title": "Induced emf and the rate of change of magnetic flux",
-      "aim": "To investigate how the emf induced in a search coil depends on the rate of change of the magnetic flux linking it (Faraday's law)."
+      "aim": "To investigate how the emf induced in a search coil depends on the rate of change of the magnetic flux linking it (Faraday's law).",
+      "setup": {
+        "why": {
+          "dc-ammeter": "The solenoid current alternates; a DC ammeter would read about zero. Use the a.c. ammeter.",
+          "bar-magnet": "Here the changing flux comes from the alternating current in the solenoid, not a moving magnet.",
+          "voltmeter": "The oscilloscope measures the induced emf (and shows its waveform)."
+        },
+        "hints": {
+          "primaryLoop": "The generator, a.c. ammeter and solenoid make one loop: generator → ammeter → solenoid → back to the generator.",
+          "ammeterSeries": "An ammeter goes in series: the solenoid's current must flow through it.",
+          "coilToScope": "The search coil connects only to the oscilloscope: one end to the Y input, the other to earth (⏚)."
+        }
+      }
     },
     "slinky": {
       "short": "Magnetic field in a slinky",
       "title": "Magnetic field inside a slinky stretched to various lengths",
-      "aim": "To investigate how the magnetic field at the centre of a current-carrying slinky depends on its length, and to determine the permeability of free space."
+      "aim": "To investigate how the magnetic field at the centre of a current-carrying slinky depends on its length, and to determine the permeability of free space.",
+      "setup": {
+        "why": {
+          "voltmeter": "You need the current, not the voltage: the field depends on I.",
+          "step-down-transformer": "An alternating current would make the field alternate; the teslameter reads steady fields.",
+          "compass": "A compass is used in a different method (deflection); here the Hall probe measures B directly."
+        },
+        "hints": {
+          "loop": "Everything is in one series loop: supply + → rheostat → ammeter → slinky → supply −.",
+          "ammeterSeries": "An ammeter goes in series, with its + terminal towards the supply's + side.",
+          "rheostatSeries": "The rheostat goes in series so it can set the current."
+        }
+      }
     },
     "current-balance": {
       "short": "Force on a current-carrying wire",
       "title": "Force on a current-carrying wire in a magnetic field",
-      "aim": "To demonstrate the force on a current-carrying wire across a magnetic field and to show that it is proportional to the current."
+      "aim": "To demonstrate the force on a current-carrying wire across a magnetic field and to show that it is proportional to the current.",
+      "setup": {
+        "why": {
+          "voltmeter": "You need the current through the rod, not the voltage.",
+          "step-down-transformer": "With alternating current the force would alternate too fast for the balance to show.",
+          "slotted-masses": "The balance measures the force directly; no masses are hung."
+        },
+        "hints": {
+          "loop": "Everything is in one series loop: supply + → rheostat → ammeter → copper rod → supply −.",
+          "ammeterSeries": "An ammeter goes in series, with its + terminal towards the supply's + side.",
+          "rheostatSeries": "The rheostat goes in series so it can set the current."
+        }
+      }
     },
     "ac-sonometer": {
       "short": "Mains frequency by sonometer",
       "title": "Frequency of alternating current using a sonometer",
-      "aim": "To determine the frequency of an alternating current supply using a sonometer wire carrying the current in a magnetic field."
+      "aim": "To determine the frequency of an alternating current supply using a sonometer wire carrying the current in a magnetic field.",
+      "setup": {
+        "why": {
+          "tuning-forks": "The supply sets the frequency here — that is the unknown you are measuring.",
+          "dc-supply": "A steady current gives a steady force: the wire would be pushed aside once, not made to vibrate.",
+          "voltmeter": "You do not need the voltage: only the length and tension at resonance."
+        },
+        "hints": {
+          "loop": "The transformer, the switch and the sonometer wire form a single loop: transformer → switch → one end of the wire, and the other end of the wire back to the transformer."
+        }
+      }
     }
   },
   "feedback": {
@@ -358,6 +438,20 @@
         "title": "{n} reading(s) have two digits swapped",
         "detail": "What you wrote has the same digits as the rule showed, in a different order. Read the rule again and copy carefully."
       }
+    },
+    "setup": {
+      "wrongPicks": {
+        "title": "{n} item(s) picked that this practical does not use",
+        "detail": "Before a practical, read the apparatus list against the method and the theory: each item must have a job in the experiment."
+      },
+      "circuitAttempts": {
+        "title": "The circuit took {n} tries to get right",
+        "detail": "Draw the circuit diagram first, then wire it one loop at a time: ammeters in series with what they measure, meters to the instrument they serve."
+      },
+      "clean": {
+        "title": "Apparatus chosen and set up correctly first time",
+        "detail": "Good preparation makes the measurements go smoothly."
+      }
     }
   },
   "workspace": {
@@ -485,6 +579,41 @@
       "export": "Export session (.vlab)",
       "name": "Your name",
       "missing": "Not written yet"
+    },
+    "setup": {
+      "title": "Set up the apparatus",
+      "intro": "Collect what this practical needs from the shelf. Some things on the shelf belong to other practicals. Then, if there is a circuit, wire it yourself.",
+      "shelfTitle": "Apparatus shelf",
+      "shelfHint": "Choose each item you need.",
+      "onBench": "On your bench",
+      "benchTitle": "On your bench",
+      "notNeeded": "{item} is not needed here.",
+      "progress": "{placed} of {needed} items collected",
+      "wiringTitle": "Wire the circuit",
+      "wiringHint": "Click a terminal, then another terminal, to connect them with a lead. Click a lead to remove it. Then check your circuit.",
+      "check": "Check circuit",
+      "clear": "Remove all leads",
+      "removeWire": "Remove this lead",
+      "ok": "Your circuit is correct.",
+      "wrong": "Not quite — some connections are wrong.",
+      "generic": "Look again at: {list}.",
+      "ready": "Your apparatus is set up. Time to measure.",
+      "goBench": "Go to the bench"
+    },
+    "replay": {
+      "play": "Replay your session",
+      "pause": "Pause replay",
+      "restart": "Show the whole log",
+      "scrub": "Replay position",
+      "speed": "Replay speed",
+      "empty": "Nothing done on the bench yet."
+    },
+    "ai": {
+      "title": "Feedback from Claude (optional)",
+      "intro": "Claude reads your discussion, precautions, sources of error and conclusion and says what a marker would want improved. It never writes them for you. Needs an internet connection and your own API key.",
+      "ask": "Ask Claude for feedback",
+      "asking": "Reading your writing…",
+      "setUp": "Add your Claude API key in Settings"
     }
   },
   "reportSections": [
@@ -503,5 +632,190 @@
     "Sources of error",
     "Conclusion",
     "References"
-  ]
+  ],
+  "apparatus": {
+    "sonometer": {
+      "name": "Sonometer",
+      "what": "Hollow box with a wire over two bridges and a pulley"
+    },
+    "tuning-forks": {
+      "name": "Tuning forks",
+      "what": "Set of forks, 256–512 Hz, frequency stamped on each"
+    },
+    "rubber-pad": {
+      "name": "Rubber pad",
+      "what": "Soft pad for striking forks"
+    },
+    "paper-rider": {
+      "name": "Paper rider",
+      "what": "Small folded V of paper that sits on a wire"
+    },
+    "slotted-masses": {
+      "name": "Hanger and slotted masses",
+      "what": "Masses that hang from a cord or wire"
+    },
+    "metre-rule": {
+      "name": "Metre rule",
+      "what": "1 mm divisions"
+    },
+    "ruler": {
+      "name": "30 cm ruler",
+      "what": "1 mm divisions"
+    },
+    "voltmeter": {
+      "name": "Voltmeter",
+      "what": "Measures potential difference"
+    },
+    "stopwatch": {
+      "name": "Stopwatch",
+      "what": "Measures time intervals"
+    },
+    "horseshoe-magnet": {
+      "name": "Horseshoe magnet",
+      "what": "U-shaped permanent magnet"
+    },
+    "bar-magnet": {
+      "name": "Bar magnet",
+      "what": "Straight permanent magnet"
+    },
+    "step-down-transformer": {
+      "name": "Step-down transformer",
+      "what": "Low-voltage alternating supply from the mains"
+    },
+    "switch": {
+      "name": "Switch",
+      "what": "Opens and closes a circuit"
+    },
+    "dc-supply": {
+      "name": "DC power supply",
+      "what": "Steady (direct) current source"
+    },
+    "rheostat": {
+      "name": "Rheostat",
+      "what": "Variable resistor to set the current"
+    },
+    "dc-ammeter": {
+      "name": "DC ammeter",
+      "what": "Measures steady current"
+    },
+    "ac-ammeter": {
+      "name": "a.c. ammeter",
+      "what": "Measures the r.m.s. value of alternating current"
+    },
+    "resonance-tube": {
+      "name": "Resonance tube and reservoir",
+      "what": "Glass tube joined to a water reservoir"
+    },
+    "thermometer": {
+      "name": "Thermometer",
+      "what": "Measures air temperature"
+    },
+    "signal-generator": {
+      "name": "Signal generator",
+      "what": "Alternating output of chosen frequency and amplitude"
+    },
+    "loudspeaker": {
+      "name": "Loudspeaker",
+      "what": "Turns the generator's signal into sound"
+    },
+    "flask-resonator": {
+      "name": "Flask resonator",
+      "what": "Round flask with a narrow neck"
+    },
+    "measuring-cylinder": {
+      "name": "Measuring cylinder",
+      "what": "100 ml, 1 ml graduations"
+    },
+    "oscilloscope": {
+      "name": "Oscilloscope",
+      "what": "Displays a voltage against time"
+    },
+    "solenoid": {
+      "name": "Long solenoid",
+      "what": "Coil with n turns per metre"
+    },
+    "search-coil": {
+      "name": "Search coil",
+      "what": "Small flat coil of N turns"
+    },
+    "slinky": {
+      "name": "Slinky",
+      "what": "Long, open, springy coil"
+    },
+    "hall-probe": {
+      "name": "Hall probe and teslameter",
+      "what": "Measures magnetic flux density"
+    },
+    "compass": {
+      "name": "Plotting compass",
+      "what": "Shows the direction of a magnetic field"
+    },
+    "top-pan-balance": {
+      "name": "Top-pan balance",
+      "what": "Reads mass to 0.01 g"
+    },
+    "magnets-yoke": {
+      "name": "Magnets on a steel yoke",
+      "what": "Two flat magnets facing across a gap"
+    },
+    "copper-rod": {
+      "name": "Copper rod and clamp stands",
+      "what": "Stiff conductor held rigidly"
+    }
+  },
+  "reference": {
+    "trainer": {
+      "title": "Practise significant figures",
+      "score": "{right} / {total} right",
+      "count": "How many significant figures are in {number}?",
+      "round": "Round {value} to {n} significant figures.",
+      "record": "A {instrument} reads exactly {truth} {unit}. Write the reading as you would record it (number only, in {unit}).",
+      "answer": "Your answer",
+      "check": "Check",
+      "next": "Next question",
+      "shuffle": "New set",
+      "right": "Right.",
+      "wrong": "Not quite — the answer is {answer}.",
+      "why": {
+        "count": "Non-zero digits count (rule 1); zeros between them count (rule 2); trailing zeros after the decimal point count (rule 3); leading zeros never count. In standard form, only the digits before × 10ⁿ count.",
+        "notNumber": "Type a number only.",
+        "round": "Rounded, with every significant zero kept.",
+        "roundValue": "Look at the first digit you drop: 5 or more rounds the last kept digit up.",
+        "roundZeros": "The value is right but the number of figures is not: keep trailing zeros that are significant (0.500, not 0.5).",
+        "record": "Recorded to the instrument's precision.",
+        "recordValue": "That is not what the instrument shows.",
+        "recordDropped": "A reading exactly on a mark still has its last digit: write the 0 (e.g. 45.0 cm on a mm-scale rule). Dropping it throws away precision you measured.",
+        "recordFalse": "That claims more precision than the instrument can give: stop at the digit the scale lets you read."
+      }
+    }
+  },
+  "settings": {
+    "report": {
+      "title": "Report format",
+      "intro": "The default is the 15-section format. Rename, reorder or leave out sections to match your school's format; reports and Word exports follow it.",
+      "include": "Include {title}",
+      "rename": "Title of section {n}",
+      "up": "Move {title} up",
+      "down": "Move {title} down",
+      "reset": "Back to the 15-section format"
+    },
+    "ai": {
+      "title": "AI feedback (optional)",
+      "intro": "With your own Claude API key, the Discussion stage can ask Claude for feedback on your writing. Everything else in the lab works without it, offline.",
+      "key": "Claude API key",
+      "save": "Save key",
+      "remove": "Remove key",
+      "privacy": "The key is stored only in this browser and sent only to Anthropic's API. Don't save it on a shared computer. Each request is billed to your Anthropic account."
+    }
+  },
+  "apparatusPage": {
+    "intro": "{n} pieces of apparatus across the practicals. {figures} have an interactive view of how they work, to explore and download.",
+    "howItWorks": "How it works",
+    "controls": "Hover or tab into the drawing; arrow keys work the apparatus. Downloads: drawing (SVG), picture (PNG) and an A4 sheet (PDF).",
+    "download": {
+      "svg": "Drawing (SVG)",
+      "png": "Picture (PNG)",
+      "pdf": "A4 sheet (PDF)"
+    }
+  }
 }

@@ -11,8 +11,8 @@ import { Tex } from "@/components/tex";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toVlab } from "@/core/db";
-import { readPref, writePref } from "@/lib/prefs";
-import { listItems, methodFromActions, type ReportModel } from "@/core/report";
+import { readPref, usePref, writePref } from "@/lib/prefs";
+import { listItems, methodFromActions, resolveTemplate, type ReportModel, type SectionId, type TemplateSection } from "@/core/report";
 import { unitOf } from "@/core/session";
 import { formatSigFigs } from "@/core/sigfigs";
 import { PAPER } from "@/experiments/analyse";
@@ -24,6 +24,8 @@ export function ReportStage({ ctx, definition, analysis }: StageProps) {
   const t = useTranslations("workspace.report");
   const tx = useTranslations(`experiments.${ctx.session.experimentId}`);
   const sections = useTranslations().raw("reportSections") as string[];
+  const saved = usePref<TemplateSection[]>("report-template");
+  const template = useMemo(() => resolveTemplate(saved, sections), [saved, sections]);
   const format = useFormatter();
   const { session } = ctx;
   const [student, setStudent] = useState(() => readPref<string>("student-name") ?? "");
@@ -70,7 +72,7 @@ export function ReportStage({ ctx, definition, analysis }: StageProps) {
   const exportDocx = async () => {
     try {
       const graph = document.querySelector<SVGSVGElement>("#report-graph svg");
-      const blob = await buildReportDocx(model, { diagram: diagramRef.current, graph });
+      const blob = await buildReportDocx(model, { diagram: diagramRef.current, graph }, template);
       download(blob, `${tx("short")} — lab report.docx`);
     } catch (e) {
       toast.error((e as Error).message);
@@ -78,6 +80,78 @@ export function ReportStage({ ctx, definition, analysis }: StageProps) {
   };
 
   const missing = <span className="text-text-muted italic">{t("missing")}</span>;
+
+  const body: Record<SectionId, React.ReactNode> = {
+    date: <>{model.date}</>,
+    title: <>{model.title}</>,
+    aim: <>{model.aim}</>,
+    apparatus: <><ul className="list-disc pl-5">
+            {model.apparatus.map((a) => (
+              <li key={a}>{a}</li>
+            ))}
+          </ul></>,
+    diagram: <>{Diagram ? <Diagram ref={diagramRef} className="h-auto w-full max-w-xl" /> : missing}</>,
+    theory: <>{model.theory.map((p) => (
+            <Tex key={p}>{p}</Tex>
+          ))}</>,
+    method: <>{model.method.length ? (
+            <ol className="list-decimal pl-5">
+              {model.method.map((m) => (
+                <li key={m}>{m}</li>
+              ))}
+            </ol>
+          ) : (
+            missing
+          )}</>,
+    observations: <>{model.constants.map((c) => (
+            <p key={c} className="figure">
+              {c}
+            </p>
+          ))}
+          <table className="figure mt-2 w-full border-collapse text-ds-mono-sm">
+            <thead>
+              <tr>
+                {model.table.headers.map((h) => (
+                  <th key={h} className="border border-sheet-edge px-2 py-1 font-medium">
+                    {h}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {model.table.rows.map((row, i) => (
+                <tr key={i}>
+                  {row.map((c, j) => (
+                    <td key={j} className="border border-sheet-edge px-2 py-1 text-right">
+                      {c}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table></>,
+    graph: <>{session.graph ? (
+            <div id="report-graph">
+              <GraphPaper graph={session.graph} squaresX={PAPER.squaresX} squaresY={PAPER.squaresY} points={analysis.context.points} ariaLabel={session.graph.title} />
+            </div>
+          ) : (
+            missing
+          )}</>,
+    calculation: <>{model.calculation.map((c, i) => (
+            <p key={i} className="figure text-ds-mono-sm">
+              {c}
+            </p>
+          ))}</>,
+    discussion: <>{model.discussion ? model.discussion.split(/\n+/).map((p, i) => <p key={i} className="mb-2">{p}</p>) : missing}</>,
+    precautions: <>{model.precautions.length ? <ul className="list-disc pl-5">{model.precautions.map((p) => <li key={p}>{p}</li>)}</ul> : missing}</>,
+    sources: <>{model.sourcesOfError.length ? <ul className="list-disc pl-5">{model.sourcesOfError.map((p) => <li key={p}>{p}</li>)}</ul> : missing}</>,
+    conclusion: <>{model.conclusion || missing}</>,
+    references: <><ul className="list-disc pl-5">
+            {model.references.map((r) => (
+              <li key={r}>{r}</li>
+            ))}
+          </ul></>,
+  };
 
   return (
     <div className="flex flex-col gap-6 px-4 py-6 md:px-6">
@@ -119,89 +193,13 @@ export function ReportStage({ ctx, definition, analysis }: StageProps) {
       <article className="report max-w-[80ch] border border-sheet-edge bg-white p-6 text-text-primary md:p-10 print:border-0 print:p-0">
         <h1 className="font-heading text-ds-heading-3">{model.title}</h1>
         {student && <p className="mt-1 text-ds-body-sm text-text-secondary">{student}</p>}
-        <Section n={1} title={sections[0]!}>{model.date}</Section>
-        <Section n={2} title={sections[1]!}>{model.title}</Section>
-        <Section n={3} title={sections[2]!}>{model.aim}</Section>
-        <Section n={4} title={sections[3]!}>
-          <ul className="list-disc pl-5">
-            {model.apparatus.map((a) => (
-              <li key={a}>{a}</li>
-            ))}
-          </ul>
-        </Section>
-        <Section n={5} title={sections[4]!}>{Diagram ? <Diagram ref={diagramRef} className="h-auto w-full max-w-xl" /> : missing}</Section>
-        <Section n={6} title={sections[5]!}>
-          {model.theory.map((p) => (
-            <Tex key={p}>{p}</Tex>
+        {template
+          .filter((section) => section.include)
+          .map((section, i) => (
+            <Section key={section.id} n={i + 1} title={section.title}>
+              {body[section.id]}
+            </Section>
           ))}
-        </Section>
-        <Section n={7} title={sections[6]!}>
-          {model.method.length ? (
-            <ol className="list-decimal pl-5">
-              {model.method.map((m) => (
-                <li key={m}>{m}</li>
-              ))}
-            </ol>
-          ) : (
-            missing
-          )}
-        </Section>
-        <Section n={8} title={sections[7]!}>
-          {model.constants.map((c) => (
-            <p key={c} className="figure">
-              {c}
-            </p>
-          ))}
-          <table className="figure mt-2 w-full border-collapse text-ds-mono-sm">
-            <thead>
-              <tr>
-                {model.table.headers.map((h) => (
-                  <th key={h} className="border border-sheet-edge px-2 py-1 font-medium">
-                    {h}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {model.table.rows.map((row, i) => (
-                <tr key={i}>
-                  {row.map((c, j) => (
-                    <td key={j} className="border border-sheet-edge px-2 py-1 text-right">
-                      {c}
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </Section>
-        <Section n={9} title={sections[8]!}>
-          {session.graph ? (
-            <div id="report-graph">
-              <GraphPaper graph={session.graph} squaresX={PAPER.squaresX} squaresY={PAPER.squaresY} points={analysis.context.points} ariaLabel={session.graph.title} />
-            </div>
-          ) : (
-            missing
-          )}
-        </Section>
-        <Section n={10} title={sections[9]!}>
-          {model.calculation.map((c, i) => (
-            <p key={i} className="figure text-ds-mono-sm">
-              {c}
-            </p>
-          ))}
-        </Section>
-        <Section n={11} title={sections[10]!}>{model.discussion ? model.discussion.split(/\n+/).map((p, i) => <p key={i} className="mb-2">{p}</p>) : missing}</Section>
-        <Section n={12} title={sections[11]!}>{model.precautions.length ? <ul className="list-disc pl-5">{model.precautions.map((p) => <li key={p}>{p}</li>)}</ul> : missing}</Section>
-        <Section n={13} title={sections[12]!}>{model.sourcesOfError.length ? <ul className="list-disc pl-5">{model.sourcesOfError.map((p) => <li key={p}>{p}</li>)}</ul> : missing}</Section>
-        <Section n={14} title={sections[13]!}>{model.conclusion || missing}</Section>
-        <Section n={15} title={sections[14]!}>
-          <ul className="list-disc pl-5">
-            {model.references.map((r) => (
-              <li key={r}>{r}</li>
-            ))}
-          </ul>
-        </Section>
         <p className="mt-10 text-ds-body-xs text-text-muted">{model.footer}</p>
       </article>
     </div>

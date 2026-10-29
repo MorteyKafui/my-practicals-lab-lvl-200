@@ -25,6 +25,17 @@ Every new feature lands on `QA` first; `master` is updated from `QA` once it has
 
 Follow `.claude/skills/add-experiment/SKILL.md`. Each practical is a plugin in `experiments/<id>/`.
 
+## Anatomy figures
+
+Interactive apparatus figures live in `public/anatomy/` and are built with the anatomy skill's kit:
+
+```sh
+node anatomy/tuning-fork.build.mjs && node anatomy/tuning-fork.build.mjs --light
+node anatomy/sonometer.build.mjs && node anatomy/sonometer.build.mjs --light
+```
+
+Register a new figure in `anatomy/figures.ts`; the Apparatus page links it with SVG/PNG/PDF downloads.
+
 ## Agent skills used in this project
 
 Third-party skills are not committed; reinstall them with:

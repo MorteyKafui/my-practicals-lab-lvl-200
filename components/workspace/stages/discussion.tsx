@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 
 import type { Writing } from "@/core/session";
 
+import { AiCritique } from "../ai-critique";
 import { FindingItem } from "../finding-item";
 import type { StageProps } from "../stage-view";
 
@@ -37,6 +38,7 @@ export function DiscussionStage({ ctx, analysis }: StageProps) {
           </label>
         ))}
       </div>
+      <AiCritique ctx={ctx} analysis={analysis} />
       {findings.length > 0 && (
         <ul className="max-w-3xl">
           {findings.map((f, i) => (

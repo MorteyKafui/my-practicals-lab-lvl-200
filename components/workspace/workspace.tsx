@@ -56,8 +56,8 @@ function ActiveWorkspace({ session }: { session: Session }) {
 
   const analysis = useMemo(() => analyse(definition, session), [definition, session]);
   const statuses = useMemo(
-    () => stageStatuses({ session, completeRows: analysis.context.completeRows.length }),
-    [session, analysis],
+    () => stageStatuses({ session, completeRows: analysis.context.completeRows.length, hasSetup: Boolean(definition.setup) }),
+    [session, analysis, definition.setup],
   );
 
   const goTo = useCallback(

@@ -5,17 +5,18 @@ import { useTranslations } from "next-intl";
 
 import { Tex } from "@/components/tex";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { formatElapsed } from "@/core/action-log";
 import type { Analysis } from "@/experiments/analyse";
 import type { ExperimentDefinition } from "@/experiments/types";
 import { cn } from "@/lib/utils";
 
 import { FindingItem } from "./finding-item";
+import { LogReplay } from "./log-replay";
 import type { WorkspaceContextValue } from "./workspace";
 
 export function SidePanel({ ctx, definition, analysis }: { ctx: WorkspaceContextValue; definition: ExperimentDefinition; analysis: Analysis }) {
   const t = useTranslations("workspace.panel");
   const tx = useTranslations(`experiments.${ctx.session.experimentId}`);
+  const ta = useTranslations("apparatus");
   const steps = tx.raw("steps") as string[];
   const theory = tx.raw("theory") as string[];
   const tips = tx.raw("tips") as string[];
@@ -72,18 +73,16 @@ export function SidePanel({ ctx, definition, analysis }: { ctx: WorkspaceContext
         </TabsContent>
 
         <TabsContent value="log" className="p-4">
-          {ctx.session.actions.length === 0 ? (
-            <p className="text-ds-body-sm text-text-muted">{t("noActions")}</p>
-          ) : (
-            <ol className="figure flex max-h-[60vh] flex-col overflow-y-auto text-ds-mono-xs" aria-live="polite">
-              {[...ctx.session.actions].reverse().slice(0, 200).map((a, i) => (
-                <li key={`${a.t}-${i}`} className="flex gap-3 border-b border-rule py-1.5">
-                  <span className="text-text-muted">{formatElapsed(a.t)}</span>
-                  <span className="min-w-0 flex-1 font-sans text-ds-body-xs text-text-secondary">{definition.logLine(a)}</span>
-                </li>
-              ))}
-            </ol>
-          )}
+          <LogReplay
+            actions={ctx.session.actions}
+            line={(a) => {
+              const d = a.detail ?? {};
+              if (a.kind === "setup-pick") return d.needed ? `Collected ${ta(`${d.item}.name`)}` : `Picked ${ta(`${d.item}.name`)} (not needed)`;
+              if (a.kind === "setup-check") return d.ok ? "Set-up checked: correct" : "Circuit checked: not yet right";
+              if (a.kind === "record") return `Recorded ${d.column} = ${d.typed}`;
+              return definition.logLine(a);
+            }}
+          />
         </TabsContent>
 
         <TabsContent value="check" className="p-4">

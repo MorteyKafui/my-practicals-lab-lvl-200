@@ -68,5 +68,7 @@ export function formatSigFigs(value: number, n: number): string {
 /** Decimal places that match an instrument's resolution (0.1 cm → 1, 0.001 m → 3, 1 Hz → 0). */
 export function decimalsForResolution(resolution: number): number {
   if (resolution >= 1) return 0;
-  return Math.max(0, Math.round(-Math.log10(resolution) + 1e-9));
+  // Decimal places of the resolution itself: 0.1 → 1, 0.5 → 1 (half a degree), 0.25 → 2, 0.005 → 3.
+  const [, fraction = ""] = Number(resolution.toPrecision(6)).toString().split(".");
+  return fraction.length;
 }
