@@ -1,4 +1,5 @@
 import { acSonometer } from "./ac-sonometer/definition";
+import { currentBalance } from "./current-balance/definition";
 import { helmholtz } from "./helmholtz/definition";
 import { resonanceTubeForks } from "./resonance-tube-forks/definition";
 import { resonanceTubeTwo } from "./resonance-tube-two/definition";
@@ -17,6 +18,7 @@ const DEFINITIONS: Record<string, ExperimentDefinition> = {
   [resonanceTubeForks.entry.id]: resonanceTubeForks as ExperimentDefinition,
   [helmholtz.entry.id]: helmholtz as ExperimentDefinition,
   [slinky.entry.id]: slinky as ExperimentDefinition,
+  [currentBalance.entry.id]: currentBalance as ExperimentDefinition,
 };
 
 export function getDefinition(id: string): ExperimentDefinition | undefined {

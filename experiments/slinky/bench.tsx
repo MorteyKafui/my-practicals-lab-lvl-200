@@ -1,10 +1,11 @@
 "use client";
 
-import { CaretDoubleLeftIcon, CaretDoubleRightIcon, CaretLeftIcon, CaretRightIcon, MinusIcon, PlusIcon } from "@phosphor-icons/react";
+import { CaretDoubleLeftIcon, CaretDoubleRightIcon, CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react";
 import { Line } from "@react-three/drei";
 import { useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 
+import { SupplyCard } from "@/components/bench/cards";
 import { MeterBox, PowerSupply, Rheostat } from "@/components/bench/electrical";
 import { BenchCanvas, BenchShell, InstrumentCard, makeRuleTexture, Nudge, Readout, type CameraPose } from "@/components/bench/kit";
 import { Button } from "@/components/ui/button";
@@ -157,30 +158,17 @@ export function SlinkyBench({ world: rawWorld, conditions, act }: BenchProps) {
       }
       cards={
         <>
-          <InstrumentCard title="Supply · ammeter">
-            <Readout value={on ? ammeter.toFixed(2) : "0.00"} unit="A" label="Ammeter" />
-            <input type="range" min={0} max={I_MAX} step={0.005} value={knob} onChange={(e) => setCurrent(Number(e.target.value))} aria-label="Rheostat (current)" className="w-full accent-[var(--select)]" />
-            <div className="flex gap-1">
-              <Nudge label="Less current" onClick={() => setCurrent(knob - 0.01)}>
-                <MinusIcon />
-              </Nudge>
-              <Button
-                size="sm"
-                className="flex-1"
-                variant={on ? "default" : "outline"}
-                aria-pressed={on}
-                onClick={() => {
-                  setOn(!on);
-                  act({ kind: "power", detail: { on: !on } });
-                }}
-              >
-                {on ? "Supply on" : "Supply off"}
-              </Button>
-              <Nudge label="More current" onClick={() => setCurrent(knob + 0.01)}>
-                <PlusIcon />
-              </Nudge>
-            </div>
-          </InstrumentCard>
+          <SupplyCard
+            on={on}
+            knob={knob}
+            max={I_MAX}
+            ammeter={ammeter}
+            onToggle={() => {
+              setOn(!on);
+              act({ kind: "power", detail: { on: !on } });
+            }}
+            onKnob={setCurrent}
+          />
           <InstrumentCard title="Teslameter (Hall probe)">
             <Readout value={(tesla * 1000).toFixed(3)} unit="mT" label="Teslameter" />
             <Button

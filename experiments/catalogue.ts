@@ -71,7 +71,7 @@ export const CATALOGUE: readonly CatalogueEntry[] = [
   {
     id: "current-balance",
     topic: "electromagnetism",
-    status: "building",
+    status: "ready",
     apparatus: ["Top-pan balance", "Magnets on yoke", "Stiff wire", "Power supply", "Ammeter"],
     graph: { y: "F / N", x: "I / A" },
     determines: "B, flux density between the poles",

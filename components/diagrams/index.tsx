@@ -1,3 +1,4 @@
+import { BalanceDiagram } from "./balance-diagram";
 import { HelmholtzDiagram } from "./helmholtz-diagram";
 import { SlinkyDiagram } from "./slinky-diagram";
 import { SonometerDiagram } from "./sonometer-diagram";
@@ -12,4 +13,5 @@ export const DIAGRAMS: Record<string, (props: DiagramProps) => React.ReactNode> 
   "resonance-tube-forks": (props) => <TubeDiagram {...props} second={false} />,
   helmholtz: HelmholtzDiagram,
   slinky: SlinkyDiagram,
+  "current-balance": BalanceDiagram,
 };

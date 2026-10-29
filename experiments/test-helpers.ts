@@ -30,8 +30,15 @@ export function goldenSession(
   const unit = (id: string) => opts.units?.[id] ?? def.columns.find((c) => c.id === id)!.units[0]!;
   const axis = (id: string, values: number[], squares: number): Axis => {
     const min = Math.min(0, ...values);
-    const perSquare = niceScale(Math.max(...values) - min, squares);
-    return { column: id, label: `${def.columns.find((c) => c.id === id)!.symbol} / ${unit(id)}`, start: Math.floor(min / perSquare) * perSquare, perSquare };
+    const max = Math.max(...values);
+    let perSquare = niceScale(max - min, squares);
+    let start = Math.floor(min / perSquare) * perSquare;
+    // Starting a square lower can push the top point off the paper: widen the scale until it fits.
+    while (start + perSquare * squares < max) {
+      perSquare = niceScale((max - start) * 1.0001, squares);
+      start = Math.floor(min / perSquare) * perSquare;
+    }
+    return { column: id, label: `${def.columns.find((c) => c.id === id)!.symbol} / ${unit(id)}`, start, perSquare };
   };
   const x = axis(def.graph.x, xs, PAPER.squaresX);
   const y = axis(def.graph.y, [...ys, at(0)], PAPER.squaresY);
