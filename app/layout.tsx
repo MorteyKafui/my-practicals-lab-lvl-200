@@ -5,6 +5,7 @@ import { getLocale, getMessages, getTranslations } from "next-intl/server";
 
 import { AppFrame } from "@/components/lab/app-frame";
 import { ServiceWorker } from "@/components/lab/service-worker";
+import { SiteFooter } from "@/components/lab/site-footer";
 import { cn } from "@/lib/utils";
 
 import { Providers } from "./providers";
@@ -47,7 +48,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full">
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Providers>
-            <AppFrame>{children}</AppFrame>
+            <AppFrame footer={<SiteFooter />}>{children}</AppFrame>
             <ServiceWorker />
           </Providers>
         </NextIntlClientProvider>

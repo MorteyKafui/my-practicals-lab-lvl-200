@@ -817,5 +817,10 @@
       "png": "Picture (PNG)",
       "pdf": "A4 sheet (PDF)"
     }
+  },
+  "footer": {
+    "supervised": "Supervised by <name>Dr Isaac Kwesi Acquah</name>",
+    "built": "Built with <heart>love</heart> by <name>Mortey Kafui</name>",
+    "note": "© {year} Physics Bench · Works offline · Your work stays on this device"
   }
 }
