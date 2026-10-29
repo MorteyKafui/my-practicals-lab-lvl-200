@@ -7,6 +7,8 @@ const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 const nextConfig: NextConfig = {
   output: "export",
   images: { unoptimized: true },
+  // Vercel sets VERCEL=1 at build time; analytics are only included in Vercel deployments.
+  env: { NEXT_PUBLIC_ON_VERCEL: process.env.VERCEL ? "1" : "" },
   turbopack: {
     rules: {
       "*.css": {

@@ -6,6 +6,7 @@ import { getLocale, getMessages, getTranslations } from "next-intl/server";
 import { AppFrame } from "@/components/lab/app-frame";
 import { ServiceWorker } from "@/components/lab/service-worker";
 import { SiteFooter } from "@/components/lab/site-footer";
+import { VercelInsights } from "@/components/lab/vercel-insights";
 import { cn } from "@/lib/utils";
 
 import { Providers } from "./providers";
@@ -30,7 +31,10 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export const viewport: Viewport = {
-  themeColor: "#eef1ea",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#eef1ea" },
+    { media: "(prefers-color-scheme: dark)", color: "#151714" },
+  ],
   width: "device-width",
   initialScale: 1,
 };
@@ -50,6 +54,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
           <Providers>
             <AppFrame footer={<SiteFooter />}>{children}</AppFrame>
             <ServiceWorker />
+            {process.env.NEXT_PUBLIC_ON_VERCEL === "1" && <VercelInsights />}
           </Providers>
         </NextIntlClientProvider>
       </body>
