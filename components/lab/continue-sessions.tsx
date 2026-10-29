@@ -4,7 +4,7 @@ import { FolderOpenIcon } from "@phosphor-icons/react";
 import { useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useFormatter, useTranslations } from "next-intl";
+import { useFormatter, useNow, useTranslations } from "next-intl";
 import { useRef } from "react";
 import { toast } from "sonner";
 
@@ -18,6 +18,8 @@ export function ContinueSessions() {
   const ts = useTranslations("stages");
   const tx = useTranslations("experiments");
   const format = useFormatter();
+  // An explicit "now" (refreshed each minute) keeps "5 minutes ago" current and avoids next-intl's fallback warning.
+  const now = useNow({ updateInterval: 60_000 });
   const sessions = useAllSessions();
   const qc = useQueryClient();
   const router = useRouter();
@@ -57,7 +59,7 @@ export function ContinueSessions() {
               <Link href={`/experiments/${s.experimentId}?s=${s.id}`} className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 py-3 hover:underline">
                 <span className="text-ds-label-md">{tx(`${s.experimentId}.short`)}</span>
                 <span className="text-ds-body-xs text-text-muted">
-                  {ts(s.stage)} · {format.relativeTime(s.updatedAt)}
+                  {ts(s.stage)} · {format.relativeTime(s.updatedAt, now)}
                 </span>
               </Link>
             </li>
