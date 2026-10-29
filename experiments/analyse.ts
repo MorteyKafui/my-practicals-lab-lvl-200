@@ -2,6 +2,7 @@ import { fitLine, type LineFit, type Point } from "@/core/analysis/regression";
 import { actualConditions, type Conditions } from "@/core/environment";
 import { runRules, type FeedbackContext, type Finding, type ParsedRow, type TableColumn } from "@/core/feedback";
 import { CALCULATE_RULES } from "@/core/rules/calculate";
+import { SETUP_RULES } from "@/core/rules/setup";
 import { GRAPH_RULES } from "@/core/rules/graph";
 import { TABLE_RULES } from "@/core/rules/table";
 import { WRITING_RULES } from "@/core/rules/writing";
@@ -106,7 +107,7 @@ export function analyse(def: ExperimentDefinition, session: Session): Analysis {
     paper: PAPER,
   };
 
-  const findings = runRules([...TABLE_RULES, ...GRAPH_RULES, ...CALCULATE_RULES, ...WRITING_RULES, ...def.rules], context);
+  const findings = runRules([...SETUP_RULES, ...TABLE_RULES, ...GRAPH_RULES, ...CALCULATE_RULES, ...WRITING_RULES, ...def.rules], context);
 
   // Results come from the slope/intercept the student typed if they parse, else their drawn line.
   const typedSlope = Number(session.answers.slope);

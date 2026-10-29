@@ -1,5 +1,7 @@
 import { expect, test, type Page } from "@playwright/test";
 
+import { openBench } from "./helpers";
+
 /** A careful student's sonometer readings (load 4.0 kg), as they would bring them from a real lab. */
 const CSV = `f,l1,l2
 256,44.1,44.3
@@ -94,10 +96,7 @@ test("bring-your-data: observations → graph → calculate → feedback unlocks
 });
 
 test("perform mode renders the 3D bench and logs bench actions", async ({ page }) => {
-  await page.goto("/experiments/stretched-wire");
-  await page.getByRole("button", { name: /Perform it on the bench/ }).click();
-  await page.getByRole("button", { name: /Go to the bench/ }).click();
-  await expect(page.locator("canvas")).toBeVisible({ timeout: 20_000 });
+  await openBench(page, "stretched-wire");
   await page.getByLabel("Total load on the wire").selectOption("4");
   await page.getByRole("button", { name: "Place rider at middle" }).click();
   await page.getByRole("button", { name: "256", exact: true }).click();
@@ -138,10 +137,7 @@ test("bench survives toggling labels, views and leaving the stage without errors
   page.on("pageerror", (e) => errors.push(e.message));
   page.on("console", (m) => m.type() === "error" && errors.push(m.text()));
 
-  await page.goto("/experiments/stretched-wire");
-  await page.getByRole("button", { name: /Perform it on the bench/ }).click();
-  await page.getByRole("button", { name: /Go to the bench/ }).click();
-  await expect(page.locator("canvas")).toBeVisible({ timeout: 20_000 });
+  await openBench(page, "stretched-wire");
   const labels = page.getByRole("button", { name: "Show labels" });
   for (let i = 0; i < 2; i++) {
     await labels.click();
@@ -171,4 +167,25 @@ test("observation cells keep focus while typing several characters", async ({ pa
   await l1.click();
   await page.keyboard.type("44.15", { delay: 40 });
   await expect(l1).toHaveValue("44.15");
+});
+
+test("set-up explains wrong picks and wrong wiring before the bench unlocks", async ({ page }) => {
+  await page.goto("/experiments/slinky");
+  await page.getByRole("button", { name: /Perform it on the bench/ }).click();
+  const stages = page.getByRole("navigation", { name: "Stages" });
+  await expect(stages.getByRole("button", { name: /^Measure/ })).toBeDisabled();
+  await page.getByRole("button", { name: /Go to the bench/ }).click();
+  await page.getByRole("button", { name: /^Voltmeter/ }).click();
+  await expect(page.getByText(/Voltmeter is not needed here/)).toBeVisible();
+  for (const item of ["Slinky", "DC power supply", "Rheostat", "DC ammeter", "Hall probe and teslameter", "Metre rule"]) {
+    await page.getByRole("button", { name: new RegExp(`^${item}`) }).click();
+  }
+  // Ammeter the wrong way round.
+  for (const [a, b] of [["DC power supply +", "Rheostat 1"], ["Rheostat 2", "DC ammeter −"], ["DC ammeter +", "Slinky end A"], ["Slinky end B", "DC power supply −"]]) {
+    await page.getByRole("button", { name: a, exact: true }).click();
+    await page.getByRole("button", { name: b, exact: true }).click();
+  }
+  await page.getByRole("button", { name: "Check circuit" }).click();
+  await expect(page.getByText(/An ammeter goes in series/)).toBeVisible();
+  await expect(stages.getByRole("button", { name: /^Measure/ })).toBeDisabled();
 });

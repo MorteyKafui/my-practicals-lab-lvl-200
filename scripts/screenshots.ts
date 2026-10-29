@@ -5,6 +5,8 @@
  */
 import { chromium } from "@playwright/test";
 
+import { completeSetup } from "../e2e/helpers";
+
 const args = process.argv.slice(2);
 const outIndex = args.indexOf("--out");
 const out = outIndex >= 0 ? args[outIndex + 1]! : ".taste-skill/inspect/app";
@@ -21,6 +23,7 @@ for (const id of ids.length ? ids : ["stretched-wire"]) {
   await page.goto(`${base}/experiments/${id}`);
   await page.getByRole("button", { name: /Perform it on the bench/ }).click();
   await page.getByRole("button", { name: /Go to the bench/ }).click();
+  await completeSetup(page, id);
   await page.locator("canvas").waitFor();
   await page.waitForTimeout(1500);
   await page.screenshot({ path: `${out}/${id}${phone ? "-phone" : ""}.png` });

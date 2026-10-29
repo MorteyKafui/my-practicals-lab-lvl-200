@@ -6,6 +6,7 @@ import { resonanceTubeForks } from "./resonance-tube-forks/definition";
 import { resonanceTubeTwo } from "./resonance-tube-two/definition";
 import { slinky } from "./slinky/definition";
 import { stretchedWire } from "./stretched-wire/definition";
+import { SETUPS } from "./setups";
 import type { ExperimentDefinition } from "./types";
 
 /**
@@ -24,5 +25,6 @@ const DEFINITIONS: Record<string, ExperimentDefinition> = {
 };
 
 export function getDefinition(id: string): ExperimentDefinition | undefined {
-  return DEFINITIONS[id];
+  const def = DEFINITIONS[id];
+  return def && { ...def, setup: def.setup ?? SETUPS[id] };
 }

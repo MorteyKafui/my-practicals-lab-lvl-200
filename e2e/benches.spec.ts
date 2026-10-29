@@ -1,6 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 import { CATALOGUE } from "../experiments/catalogue";
+import { openBench } from "./helpers";
 
 /** Every ready practical: the bench renders, its controls work, and nothing logs an error. */
 for (const entry of CATALOGUE.filter((e) => e.status === "ready")) {
@@ -9,10 +10,7 @@ for (const entry of CATALOGUE.filter((e) => e.status === "ready")) {
     page.on("pageerror", (e) => errors.push(e.message));
     page.on("console", (m) => m.type() === "error" && errors.push(m.text()));
 
-    await page.goto(`/experiments/${entry.id}`);
-    await page.getByRole("button", { name: /Perform it on the bench/ }).click();
-    await page.getByRole("button", { name: /Go to the bench/ }).click();
-    await expect(page.locator("canvas")).toBeVisible({ timeout: 20_000 });
+    await openBench(page, entry.id);
     await expect(page.locator('[aria-live="polite"]').first()).not.toBeEmpty();
 
     const labels = page.getByRole("button", { name: "Show labels" });

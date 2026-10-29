@@ -1,5 +1,6 @@
 import type { LabAction } from "./action-log";
 import type { Environment } from "./environment";
+import type { SetupState } from "./setup";
 import { parseFigure, type ParsedFigure } from "./sigfigs";
 import { toSI, type QuantityKind } from "./units";
 
@@ -12,6 +13,7 @@ export type Mode = "perform" | "bring";
 
 export type StageId =
   | "brief"
+  | "setup"
   | "measure"
   | "observations"
   | "graph"
@@ -23,6 +25,7 @@ export type StageId =
 
 export const STAGES: readonly StageId[] = [
   "brief",
+  "setup",
   "measure",
   "observations",
   "graph",
@@ -87,6 +90,8 @@ export interface Session {
   /** Calculation answers as typed: slope, intercept, results. */
   answers: Record<string, string>;
   writing: Writing;
+  /** The do-it-yourself set-up (perform mode). */
+  setup?: SetupState;
   feedbackViewedAt?: number;
   /** Bring-your-data mode: where the data came from, for the report. */
   source?: string;

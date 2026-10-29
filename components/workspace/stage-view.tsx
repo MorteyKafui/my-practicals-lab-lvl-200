@@ -18,6 +18,7 @@ import { FeedbackStage } from "./stages/feedback";
 import { GraphStage } from "./stages/graph";
 import { ObservationsStage } from "./stages/observations";
 import { ReportStage } from "./stages/report";
+import { SetupStage } from "./stages/setup";
 import type { WorkspaceContextValue } from "./workspace";
 
 // The 3D bench needs WebGL and the browser: never rendered on the server.
@@ -60,12 +61,14 @@ function renderStage(stage: StageId, props: StageProps, t: ReturnType<typeof use
       return (
         <div className="px-4 py-6 md:px-6">
           <BriefContent experimentId={ctx.session.experimentId} />
-          <Button className="mt-8" onClick={() => ctx.goTo(ctx.session.mode === "perform" ? "measure" : "observations")}>
+          <Button className="mt-8" onClick={() => ctx.goTo(ctx.session.mode === "perform" ? (props.definition.setup ? "setup" : "measure") : "observations")}>
             {ctx.session.mode === "perform" ? t("brief.begin") : t("brief.beginBring")}
             <ArrowRightIcon data-icon="inline-end" />
           </Button>
         </div>
       );
+    case "setup":
+      return <SetupStage {...props} />;
     case "measure":
       return <MeasureStage {...props} />;
     case "observations":

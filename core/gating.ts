@@ -16,17 +16,23 @@ export interface StageStatus {
 }
 
 export interface GateInputs {
-  session: Pick<Session, "mode" | "graph" | "answers" | "feedbackViewedAt">;
+  session: Pick<Session, "mode" | "graph" | "answers" | "feedbackViewedAt" | "setup">;
+  /** The practical has a set-up stage. */
+  hasSetup?: boolean;
   completeRows: number;
 }
 
 export const MIN_ROWS_TO_PLOT = 3;
 
-export function stageStatuses({ session, completeRows }: GateInputs): StageStatus[] {
+export function stageStatuses({ session, completeRows, hasSetup = false }: GateInputs): StageStatus[] {
   return STAGES.map((stage): StageStatus => {
     switch (stage) {
+      case "setup":
+        return session.mode === "bring" || !hasSetup ? { stage, state: "skipped" } : { stage, state: "open" };
       case "measure":
-        return session.mode === "bring" ? { stage, state: "skipped" } : { stage, state: "open" };
+        if (session.mode === "bring") return { stage, state: "skipped" };
+        // The bench opens once the apparatus has been chosen (and wired) correctly.
+        return hasSetup && !session.setup?.done ? { stage, state: "locked", reason: "needSetup" } : { stage, state: "open" };
       case "graph":
       case "calculate":
         return completeRows >= MIN_ROWS_TO_PLOT ? { stage, state: "open" } : { stage, state: "locked", reason: "needRows" };
