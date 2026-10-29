@@ -1,0 +1,61 @@
+{
+  "experiments": {
+    "slinky": {
+      "theory": [
+        "A slinky carrying a current $I$ is a solenoid whose turns per metre change as it is stretched. Inside a long solenoid of $N$ turns and length $L$ the field is uniform:",
+        "$$B = \\mu_0 \\frac{N}{L} I$$",
+        "At constant current a graph of $B$ against $N/L$ is a straight line through the origin with slope $\\mu_0 I$, so $\\mu_0 = \\dfrac{\\text{slope}}{I}$.",
+        "For a slinky that is not much longer than its diameter $D$, the field at the centre is smaller: $B = \\mu_0 N I / \\sqrt{L^{2} + D^{2}}$. Short lengths fall below the line.",
+        "A Hall probe also reads Earth's field and its own offset, so it must be zeroed at the centre of the slinky with the current switched off."
+      ],
+      "apparatus": {
+        "slinky": "Slinky spring: a long, open coil of N turns.",
+        "supply": "DC power supply with a rheostat to set the current.",
+        "ammeter": "Ammeter in series with the slinky.",
+        "probe": "Hall probe and teslameter, reading to 0.001 mT.",
+        "rule": "Metre rule (1.5 m) along the bench, with clamps to hold the slinky's ends."
+      },
+      "safety": [
+        "Keep the current below about 3 A: the slinky warms up at high currents.",
+        "Switch the supply off while you re-clamp the slinky."
+      ],
+      "steps": [
+        "With the supply off, put the Hall probe at the centre of the slinky and zero the teslameter.",
+        "Switch on and set a steady current with the rheostat. Record N and I.",
+        "Stretch the slinky to a length L and read L on the metre rule.",
+        "Read B on the teslameter with the probe at the centre.",
+        "Repeat for at least six lengths, keeping I constant (check the ammeter each time).",
+        "Work out N/L and plot B against N/L."
+      ],
+      "tips": [
+        "Zero with the current OFF: zeroing with it on removes the very field you want to measure.",
+        "Keep the turns evenly spaced along the slinky before each reading.",
+        "Read the slinky's end square-on to the rule (Eye level view)."
+      ],
+      "references": [
+        "Young, H. D. & Freedman, R. A. University Physics, ch. 28: Sources of magnetic field (field of a solenoid).",
+        "Physics Bench virtual laboratory — slinky practical."
+      ]
+    }
+  },
+  "feedback": {
+    "slinky": {
+      "notZeroed": {
+        "title": "The teslameter was not zeroed before your readings",
+        "detail": "Earth's field and the probe's offset add to every reading, giving an intercept and a biased slope. Zero it at the centre of the slinky with the current off."
+      },
+      "zeroedWithCurrent": {
+        "title": "The teslameter was zeroed with the current on",
+        "detail": "Zeroing with the current flowing subtracts the slinky's own field from every later reading. Switch the supply off, zero, then switch on again."
+      },
+      "currentChanged": {
+        "title": "The current was changed during your readings",
+        "detail": "B ∝ (N/L)·I only gives a straight line if I stays the same. Keep the rheostat fixed and check the ammeter at each length."
+      },
+      "endEffects": {
+        "title": "Short lengths fall below the line",
+        "detail": "When L is not much bigger than the slinky's diameter the field at the centre is less than μ₀NI/L. Mention this end effect in your discussion, or leave those points out of your line."
+      }
+    }
+  }
+}

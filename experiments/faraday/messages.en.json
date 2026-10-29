@@ -1,0 +1,61 @@
+{
+  "experiments": {
+    "faraday": {
+      "theory": [
+        "Faraday's law: the emf induced in a coil equals the rate of change of the magnetic flux linkage, $\\varepsilon = -\\dfrac{d(N\\Phi)}{dt}$.",
+        "A long solenoid with $n$ turns per metre carrying $I = I_0 \\sin\\omega t$ has a field $B = \\mu_0 n I$ inside it. A search coil of $N$ turns and area $A = \\pi d^{2}/4$ at its centre links $N\\Phi = N\\mu_0 n A I$, so the induced emf has peak value",
+        "$$\\varepsilon_0 = N\\mu_0 n A\\,\\omega I_0 = 2\\pi f\\,(N\\mu_0 n A I_0)$$",
+        "At constant current the peak emf is proportional to the frequency, i.e. to the rate of change of flux: a graph of $\\varepsilon_0$ against $f$ is a straight line through the origin with slope $2\\pi N\\mu_0 n A I_0$.",
+        "On the oscilloscope, $\\varepsilon_0 = \\tfrac{1}{2} \\times$ (peak-to-peak height in divisions) $\\times$ (volts/div). An a.c. ammeter reads the r.m.s. current, $I_0 = \\sqrt{2}\\,I_{\\text{rms}}$."
+      ],
+      "apparatus": {
+        "solenoid": "Long solenoid with n turns per metre (on its label).",
+        "coil": "Search coil of N turns and diameter d, at the centre of the solenoid.",
+        "generator": "Signal generator with frequency display and amplitude control.",
+        "ammeter": "a.c. ammeter in series with the solenoid (reads r.m.s.).",
+        "scope": "Oscilloscope connected across the search coil."
+      },
+      "safety": [
+        "Keep the generator amplitude low enough that the solenoid does not warm up.",
+        "Switch the output off before changing connections."
+      ],
+      "steps": [
+        "Connect the generator, ammeter and solenoid in series; connect the search coil to the oscilloscope. Record N, n and d.",
+        "Switch on and set the amplitude for a convenient current, e.g. 100 mA r.m.s.",
+        "Set the oscilloscope's volts/div so the trace fills as much of the screen as possible; read its peak-to-peak height Y in divisions.",
+        "Change the frequency. Re-adjust the amplitude until the ammeter reads the same current, then read Y again (changing volts/div if needed).",
+        "Repeat for at least six frequencies.",
+        "Work out ε₀ = Y × S / 2 for each, plot ε₀ against f, and use the slope to find μ₀."
+      ],
+      "tips": [
+        "The current falls as the frequency rises (the solenoid's inductance): always bring it back to the same value before reading.",
+        "Use the smallest volts/div that keeps the whole trace on the screen.",
+        "Read the trace's top and bottom against the centre axis's fine marks (0.2 div)."
+      ],
+      "references": [
+        "Young, H. D. & Freedman, R. A. University Physics, ch. 29: Electromagnetic induction.",
+        "Physics Bench virtual laboratory — Faraday's law practical."
+      ]
+    }
+  },
+  "feedback": {
+    "faraday": {
+      "currentVaries": {
+        "title": "The current changed by {percent}% across your readings",
+        "detail": "ε₀ ∝ f only at constant current. After each change of frequency, re-adjust the amplitude until the ammeter shows the same r.m.s. current."
+      },
+      "peakToPeak": {
+        "title": "ε₀ is half the peak-to-peak value",
+        "detail": "Y is the peak-to-peak height. The peak emf is ε₀ = Y × S / 2."
+      },
+      "offScreen": {
+        "title": "Some traces were taller than the screen",
+        "detail": "The screen is 8 divisions high, so a peak-to-peak height above 8 div cannot be read. Choose a larger volts/div."
+      },
+      "tinyTrace": {
+        "title": "Some traces were very small",
+        "detail": "A trace under 2 divisions tall gives a large reading error. Choose a smaller volts/div so it fills more of the screen."
+      }
+    }
+  }
+}

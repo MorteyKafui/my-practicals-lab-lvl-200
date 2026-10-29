@@ -1,0 +1,55 @@
+{
+  "experiments": {
+    "ac-sonometer": {
+      "theory": [
+        "A wire carrying a current $I$ across a magnetic field $B$ feels a force $F = BIl$ at right angles to both. With an alternating current the force alternates at the supply frequency $f$, so the wire is forced to vibrate at $f$.",
+        "When the natural frequency of the stretched length $l$ matches $f$, the wire resonates in its fundamental mode:",
+        "$$f = \\frac{1}{2l}\\sqrt{\\frac{T}{\\mu}} \\quad\\Rightarrow\\quad l^{2} = \\frac{T}{4f^{2}\\mu}$$",
+        "A graph of $l^2$ against the tension $T = Mg$ is a straight line through the origin with slope $k = 1/(4f^{2}\\mu)$, so $f = \\dfrac{1}{2\\sqrt{k\\mu}}$.",
+        "The magnet must be at the middle of the vibrating length, where the fundamental has its antinode; a non-magnetic wire is used so the force alternates at $f$ and not $2f$."
+      ],
+      "apparatus": {
+        "sonometer": "Sonometer: wooden box with a brass wire over two bridges and a pulley.",
+        "transformer": "Step-down transformer: low-voltage alternating supply from the mains.",
+        "magnet": "Horseshoe magnet: its poles straddle the wire.",
+        "rider": "Paper rider to show the point of maximum vibration.",
+        "masses": "Hanger (0.5 kg) and 0.25 kg slotted masses.",
+        "rule": "Metre rule fixed along the sonometer."
+      },
+      "safety": [
+        "Use only the low-voltage output of the step-down transformer; never connect the wire to the mains directly.",
+        "Switch the supply off between readings so the wire does not overheat."
+      ],
+      "steps": [
+        "Hang a load on the wire and record its mass M. Note μ from the label on the wire's reel.",
+        "Place the horseshoe magnet so its poles straddle the wire near the middle of the bridges.",
+        "Switch on the low-voltage AC supply.",
+        "Adjust the movable bridge until the wire vibrates with maximum amplitude and the rider is thrown off: l₁ (from short), then l₂ (from long).",
+        "Keep the magnet and rider at the middle of the new length each time.",
+        "Repeat for at least five different loads.",
+        "Work out T = Mg, l = (l₁ + l₂)/2 and l², then plot l² against T."
+      ],
+      "tips": [
+        "Move the magnet whenever you change the length a lot: it must sit at the middle of the vibrating part.",
+        "Read the bridge position in the eye-level view.",
+        "Use g = 9.81 N kg⁻¹ when working out T."
+      ],
+      "references": [
+        "Young, H. D. & Freedman, R. A. University Physics, ch. 27 (force on a current-carrying conductor) and ch. 15 (standing waves).",
+        "Physics Bench virtual laboratory — AC sonometer practical."
+      ]
+    }
+  },
+  "feedback": {
+    "ac": {
+      "massNotTension": {
+        "title": "T is the tension in newtons, not the mass",
+        "detail": "Multiply the mass in kilograms by g = 9.81 N kg⁻¹: a 1.50 kg load gives T = 14.7 N."
+      },
+      "magnetOffCentre": {
+        "title": "The magnet was off-centre at {n} resonance(s)",
+        "detail": "The fundamental is driven hardest when the magnet sits at the middle of the vibrating length. Off-centre, the wire may resonate weakly or in another mode."
+      }
+    }
+  }
+}

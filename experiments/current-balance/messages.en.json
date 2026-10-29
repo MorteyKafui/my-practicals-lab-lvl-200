@@ -1,0 +1,65 @@
+{
+  "experiments": {
+    "current-balance": {
+      "theory": [
+        "A straight conductor of length $L$ carrying a current $I$ at right angles to a magnetic field $B$ feels a force",
+        "$$F = B I L$$",
+        "at right angles to both the current and the field; its direction is given by Fleming's left-hand rule and reverses when the current is reversed.",
+        "Here the conductor is held rigidly and the magnets sit on a top-pan balance. By Newton's third law the magnets feel an equal and opposite force, so the balance reading changes by $\\Delta m = F/g$, and $F = (m - m_0)g$.",
+        "A graph of $F$ against $I$ is a straight line through the origin with slope $BL$, so $B = \\text{slope}/L$."
+      ],
+      "apparatus": {
+        "balance": "Top-pan balance reading to 0.01 g.",
+        "magnets": "Two flat magnets on a U-shaped steel yoke (opposite poles facing).",
+        "rod": "Stiff copper rod held by clamp stands through the gap, not touching the magnets.",
+        "supply": "DC power supply, rheostat and ammeter, with a reversing switch.",
+        "ruler": "Ruler to measure the width of the poles (the length of rod in the field)."
+      },
+      "safety": [
+        "The rod gets warm at high currents: keep currents below 5 A and switch off between readings.",
+        "Keep the strong magnets away from phones, cards and the balance's electronics."
+      ],
+      "steps": [
+        "With no current, record the balance reading m₀ (or tare the balance to zero).",
+        "Measure the width of the poles L with a ruler.",
+        "Switch on and set a current I with the rheostat; read the ammeter and the balance m.",
+        "Repeat for at least six currents, all in the same direction.",
+        "Reverse the current and note what happens to the reading (Fleming's left-hand rule).",
+        "Work out F = (m − m₀)g and plot F against I."
+      ],
+      "tips": [
+        "Make sure the rod does not touch the magnets or the yoke.",
+        "Tare or read m₀ with the current OFF.",
+        "Keep all your readings with the current in one direction, or treat the reversed ones separately."
+      ],
+      "references": [
+        "Young, H. D. & Freedman, R. A. University Physics, ch. 27: Magnetic field and magnetic forces.",
+        "Physics Bench virtual laboratory — current balance practical."
+      ]
+    }
+  },
+  "feedback": {
+    "balance": {
+      "noZeroReading": {
+        "title": "Record the balance reading with no current, m₀",
+        "detail": "The force comes from the change in reading: F = (m − m₀)g. Without m₀ (or a tared balance, m₀ = 0) the forces cannot be worked out."
+      },
+      "mixedDirections": {
+        "title": "Some readings are below m₀",
+        "detail": "Those were taken with the current reversed, so the force on the magnets was the other way. Keep one direction for your graph, and describe the reversal in your discussion."
+      },
+      "massNotForce": {
+        "title": "F is a force in newtons, not a mass",
+        "detail": "Multiply the change in mass (in kg) by g = 9.81 N kg⁻¹: a change of 1.20 g gives F = 0.00120 × 9.81 = 0.0118 N = 11.8 mN."
+      },
+      "neverReversed": {
+        "title": "Try reversing the current",
+        "detail": "This practical also demonstrates the direction of the force. Reverse the current and explain the change in reading with Fleming's left-hand rule."
+      },
+      "taredWithCurrent": {
+        "title": "The balance was tared with the current on",
+        "detail": "Taring then hides the force you want to measure. Switch off, tare, then switch on again."
+      }
+    }
+  }
+}
