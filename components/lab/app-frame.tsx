@@ -42,7 +42,7 @@ function isActive(pathname: string, href: string) {
  * around a white working sheet inset 8px from the window's right and bottom edges.
  * On phones the frame folds away: the sheet becomes the screen and the rail becomes a bottom bar.
  */
-export function AppFrame({ children }: { children: ReactNode }) {
+export function AppFrame({ children, footer }: { children: ReactNode; footer?: ReactNode }) {
   const pathname = usePathname();
   const t = useTranslations();
 
@@ -86,9 +86,10 @@ export function AppFrame({ children }: { children: ReactNode }) {
 
         <main
           id="main"
-          className="mb-16 min-w-0 flex-1 border-sheet-edge bg-sheet md:mr-2 md:mb-2 md:border"
+          className="mb-16 flex min-w-0 flex-1 flex-col border-sheet-edge bg-sheet md:mr-2 md:mb-2 md:border"
         >
-          {children}
+          <div className="flex-1">{children}</div>
+          {footer}
         </main>
       </div>
 
