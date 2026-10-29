@@ -39,3 +39,18 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# taste-skill working files (screenshots, inspector output)
+/.taste-skill/inspect/
+/.taste-skill/before/
+/.taste-skill/after/
+
+# playwright
+/test-results/
+/playwright-report/
+pwa/.sw.bundled.js
+
+# third-party agent skills (reinstall with the commands in README); our own skills are committed
+/.claude/skills/anatomy/
+/.claude/skills/design-taste-frontend/
+/.taste-skill/inspect/

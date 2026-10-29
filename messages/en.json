@@ -1,0 +1,503 @@
+{
+  "app": {
+    "name": "Physics Bench",
+    "tagline": "Prepare · Measure · Analyse · Report",
+    "description": "A virtual physics laboratory: perform real practicals on a 3D bench, record your own readings, plot your graph and write your lab report."
+  },
+  "nav": {
+    "home": "Home",
+    "experiments": "Experiments",
+    "apparatus": "Apparatus",
+    "reference": "Reference",
+    "settings": "Settings",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "smallScreen": {
+    "title": "This lab is best on a bigger screen",
+    "body": "The bench, your notebook and your graph sit side by side. On a laptop, desktop or a tablet in landscape you can see them all at once and read the instruments up close.",
+    "continue": "Continue on this device",
+    "later": "Remind me later",
+    "banner": "Small screen: some panels are folded away.",
+    "bannerAction": "Why?"
+  },
+  "home": {
+    "title": "Practicals",
+    "subtitle": "{ready} of {total} practicals are ready on the bench. Pick one to prepare, perform and report.",
+    "continueTitle": "Pick up where you left off",
+    "noSessions": "You haven't started a practical yet. Your sessions are saved on this device.",
+    "open": "Open",
+    "comingSoon": "Being built",
+    "ready": "Ready",
+    "topic": {
+      "waves": "Waves",
+      "acoustics": "Acoustics",
+      "electromagnetism": "Electromagnetism"
+    },
+    "modesTitle": "Two ways to work",
+    "modePerform": "Perform it on the bench",
+    "modePerformBody": "Set up the apparatus, take your own readings by eye and see your technique show up in your data.",
+    "modeBring": "Bring your own data",
+    "modeBringBody": "Did the practical in a real lab? Type in or import your readings and get the same graph, calculations and feedback.",
+    "loopTitle": "What happens in every practical",
+    "lockedNote": "Accepted values unlock only after you have analysed your own results and read your feedback."
+  },
+  "stages": {
+    "brief": "Brief",
+    "setup": "Set up",
+    "measure": "Measure",
+    "observations": "Observations",
+    "graph": "Graph",
+    "calculate": "Calculate",
+    "discussion": "Discussion",
+    "feedback": "Feedback",
+    "compare": "Compare",
+    "report": "Report",
+    "locked": "Locked until you have read your feedback",
+    "why": {
+      "needRows": "Record at least 3 complete readings first.",
+      "needLine": "Draw your best-fit line on the graph first.",
+      "needSlope": "Calculate your slope first.",
+      "needFeedback": "Read your feedback first — then compare with the accepted values."
+    }
+  },
+  "progress": {
+    "label": "Practical",
+    "stage": "Stage {current} of {total}",
+    "elapsed": "Elapsed"
+  },
+  "experiments": {
+    "stretched-wire": {
+      "short": "Sonometer: frequency and length",
+      "title": "Resonant frequency of a stretched wire and its length",
+      "aim": "To investigate how the resonant frequency of a stretched wire depends on its vibrating length when the tension is kept constant, and to find the wire's mass per unit length.",
+      "theory": [
+        "A wire stretched between two bridges vibrates in standing waves with nodes at the bridges. In its fundamental mode the vibrating length $l$ is half a wavelength, so $\\lambda = 2l$.",
+        "Transverse waves travel along a wire of tension $T$ and mass per unit length $\\mu$ at speed $v = \\sqrt{T/\\mu}$. With $v = f\\lambda$, the fundamental frequency is",
+        "$$f = \\frac{1}{2l}\\sqrt{\\frac{T}{\\mu}}$$",
+        "At constant tension $f \\propto 1/l$: a graph of $f$ against $1/l$ is a straight line through the origin with slope $k = \\tfrac{1}{2}\\sqrt{T/\\mu}$, so $\\mu = \\dfrac{T}{4k^{2}}$ with $T = Mg$.",
+        "When the wire's natural frequency matches the tuning fork's, it resonates: a small paper rider placed at the middle of the wire (an antinode of the fundamental) is thrown off."
+      ],
+      "apparatus": {
+        "sonometer": "Sonometer: a hollow wooden box with a wire fixed at one end, running over two bridges and a pulley.",
+        "forks": "Set of tuning forks, 256–512 Hz, each stamped with its frequency.",
+        "pad": "Rubber pad for striking the forks.",
+        "rider": "Paper rider: a small V of paper that sits on the wire.",
+        "masses": "Hanger and slotted masses to set the tension.",
+        "rule": "Metre rule fixed along the sonometer, read to the nearest millimetre."
+      },
+      "safety": [
+        "Keep your feet clear of the hanging load and add masses gently.",
+        "Strike forks only on the rubber pad, never on the bench or the sonometer."
+      ],
+      "steps": [
+        "Hang a load on the wire and record its total mass M (hanger included).",
+        "Place the paper rider at the middle of the wire between the bridges.",
+        "Start with the movable bridge close to the fixed bridge (short length).",
+        "Strike the lowest-frequency fork on the rubber pad and press its stem on the sonometer box.",
+        "Slowly lengthen the wire until the rider is thrown off. Read the bridge position: this is l₁.",
+        "Start long and shorten the wire until the rider is thrown again: this is l₂.",
+        "Repeat for every fork, keeping the load the same.",
+        "Work out l = (l₁ + l₂)/2 and 1/l in m⁻¹, then plot f against 1/l."
+      ],
+      "tips": [
+        "Read the rule square-on (Eye level view) to avoid parallax.",
+        "Near resonance, move the bridge in small steps and strike the fork again: the rider only jumps while the fork is loud.",
+        "If the rider is thrown at a length much longer than expected, the wire may be vibrating in two loops."
+      ]
+    },
+    "resonance-tube-two": {
+      "short": "Velocity of sound: resonance tube",
+      "title": "Velocity of sound in air by resonance tube",
+      "aim": "To determine the velocity of sound in air from the first and second resonance positions of a tube closed at one end, and to find the end correction."
+    },
+    "resonance-tube-forks": {
+      "short": "Velocity of sound: several forks",
+      "title": "Velocity of sound in an air column closed at one end",
+      "aim": "To determine the velocity of sound in air and the end correction of a closed tube using tuning forks of different frequencies."
+    },
+    "helmholtz": {
+      "short": "Narrow-neck resonator",
+      "title": "Calibration of a narrow-neck (Helmholtz) resonator",
+      "aim": "To calibrate a narrow-neck resonator by measuring its resonant frequency for different air volumes, and to use the calibration to find an unknown volume."
+    },
+    "faraday": {
+      "short": "Faraday's law of induction",
+      "title": "Induced emf and the rate of change of magnetic flux",
+      "aim": "To investigate how the emf induced in a search coil depends on the rate of change of the magnetic flux linking it (Faraday's law)."
+    },
+    "slinky": {
+      "short": "Magnetic field in a slinky",
+      "title": "Magnetic field inside a slinky stretched to various lengths",
+      "aim": "To investigate how the magnetic field at the centre of a current-carrying slinky depends on its length, and to determine the permeability of free space."
+    },
+    "current-balance": {
+      "short": "Force on a current-carrying wire",
+      "title": "Force on a current-carrying wire in a magnetic field",
+      "aim": "To demonstrate the force on a current-carrying wire across a magnetic field and to show that it is proportional to the current."
+    },
+    "ac-sonometer": {
+      "short": "Mains frequency by sonometer",
+      "title": "Frequency of alternating current using a sonometer",
+      "aim": "To determine the frequency of an alternating current supply using a sonometer wire carrying the current in a magnetic field."
+    }
+  },
+  "feedback": {
+    "severity": {
+      "error": "Fix",
+      "warning": "Check",
+      "tip": "Tip",
+      "good": "Well done"
+    },
+    "table": {
+      "enoughRows": {
+        "title": "{n} readings — a good number",
+        "detail": "Enough points to draw a reliable line and spot a reading that doesn't fit."
+      },
+      "tooFewRows": {
+        "title": "Only {n} complete readings",
+        "detail": "Take at least {min}. With few points one bad reading can tilt your whole line, and you can't tell which one it is."
+      },
+      "narrowRange": {
+        "title": "Your readings cover a narrow range",
+        "detail": "Your largest x value is only {ratio}× your smallest. Spread your readings over as wide a range as the apparatus allows so the slope is well defined."
+      },
+      "unparseable": {
+        "title": "“{value}” in column {symbol} isn't a number",
+        "detail": "Type only the number in the cell; the unit belongs in the column header."
+      },
+      "inconsistentDecimals": {
+        "title": "Column {symbol} mixes precisions",
+        "detail": "Values are written to {list} decimal places. Readings from one instrument should all be recorded to the same precision."
+      },
+      "falsePrecision": {
+        "title": "Too many digits in {symbol}",
+        "detail": "Your instrument can only be read to {expected} decimal place(s) in {unit}. Extra digits claim a precision you didn't measure."
+      },
+      "underRecorded": {
+        "title": "Digits dropped in {symbol}",
+        "detail": "The instrument reads to {expected} decimal place(s) in {unit}. Record the last digit even when it is 0 (write 45.0, not 45)."
+      },
+      "unitSlip": {
+        "title": "{value} in column {symbol} looks like a different unit",
+        "detail": "It is about {factor}× away from the rest of the column. Was it recorded in another unit?"
+      },
+      "derivedArithmetic": {
+        "title": "{count} value(s) of {symbol} don't follow from your readings",
+        "detail": "For example you wrote {typed}, but your readings give {expected} {unit}. Re-check the arithmetic and the unit conversion."
+      },
+      "outlier": {
+        "title": "A point lies {sigma}σ from the line",
+        "detail": "This reading doesn't fit the pattern of the others. Repeat it before you decide anything about it."
+      }
+    },
+    "graph": {
+      "noTitle": {
+        "title": "Your graph needs a title",
+        "detail": "Name what is plotted against what, e.g. “Graph of f against 1/l”."
+      },
+      "noAxisLabel": {
+        "title": "The {axis}-axis has no label",
+        "detail": "Label every axis with the quantity and its unit."
+      },
+      "axisNoUnit": {
+        "title": "The {axis}-axis label has no unit",
+        "detail": "Write the unit with the quantity, e.g. “… / {unit}”."
+      },
+      "awkwardScale": {
+        "title": "{perSquare} per square on the {axis}-axis is hard to plot with",
+        "detail": "Choose 1, 2 or 5 (×10ⁿ) units per square so every point falls where you can read it."
+      },
+      "offPaper": {
+        "title": "Some points fall off the {axis}-axis",
+        "detail": "Extend the scale so every reading fits on the paper."
+      },
+      "smallScale": {
+        "title": "Your plot only reaches {percent}% of the {axis}-axis",
+        "detail": "Choose a scale that makes the plot fill at least half the paper in each direction; a bigger graph gives a more precise slope."
+      },
+      "noLine": {
+        "title": "Draw your best straight line",
+        "detail": "Drag the two ends of the line so it follows the trend of your points."
+      },
+      "lineTooSteep": {
+        "title": "Your line is about {percent}% steeper than your points suggest",
+        "detail": "A best-fit line has roughly as many points above it as below, spread along its whole length."
+      },
+      "lineTooShallow": {
+        "title": "Your line is about {percent}% shallower than your points suggest",
+        "detail": "A best-fit line has roughly as many points above it as below, spread along its whole length."
+      },
+      "missesCentroid": {
+        "title": "Your line misses the middle of your data",
+        "detail": "A best-fit line passes through the mean point (x̄, ȳ) of your readings."
+      },
+      "unbalanced": {
+        "title": "{above} points above your line, {below} below",
+        "detail": "Try rotating the line slightly so the points are shared more evenly."
+      },
+      "goodLine": {
+        "title": "Your best-fit line follows your data well",
+        "detail": "It passes through the middle of your points with them balanced on either side."
+      },
+      "noTriangle": {
+        "title": "Mark a slope triangle on your line",
+        "detail": "Pick two points on your line (not data points) far apart, and read Δy and Δx."
+      },
+      "smallTriangle": {
+        "title": "Your slope triangle is small",
+        "detail": "Use a triangle covering at least half your line: reading errors matter less over a large Δx."
+      },
+      "triangleOffLine": {
+        "title": "Your triangle's corners aren't on your line",
+        "detail": "Take both points from your drawn line, not from the data."
+      }
+    },
+    "calc": {
+      "noSlope": {
+        "title": "Calculate the slope of your line",
+        "detail": "Use your triangle: slope = Δy / Δx, with units."
+      },
+      "unreadable": {
+        "title": "“{value}” isn't a number",
+        "detail": "Type the {what} as a number; units go beside it."
+      },
+      "slopeOk": {
+        "title": "Your slope matches your graph",
+        "detail": "Good — the value follows from your own triangle."
+      },
+      "slopeInverted": {
+        "title": "Your slope is upside down",
+        "detail": "You worked out Δx / Δy. The slope is Δy / Δx: the change up divided by the change across."
+      },
+      "slopeSign": {
+        "title": "Your slope has the wrong sign",
+        "detail": "Check which way your line goes: rising lines have a positive slope."
+      },
+      "slopeWrong": {
+        "title": "Your slope ({typed}) doesn't match your triangle",
+        "detail": "Your triangle gives about {expected}. Re-read Δy and Δx from the graph, in the units on your axes."
+      },
+      "interceptOk": {
+        "title": "Your intercept matches your line",
+        "detail": "Good."
+      },
+      "interceptFalseOrigin": {
+        "title": "Your intercept ({typed}) can't be read from this graph",
+        "detail": "Your x-axis doesn't start at zero, so the line crosses x = 0 off the paper. Calculate it: c = y − m·x using a point on your line (about {expected})."
+      },
+      "interceptWrong": {
+        "title": "Your intercept ({typed}) doesn't match your line",
+        "detail": "Your line crosses x = 0 at about {expected}."
+      }
+    },
+    "write": {
+      "noPrecautions": {
+        "title": "List your precautions",
+        "detail": "What did you do to make your readings reliable? Each precaution should be something you actually did."
+      },
+      "fewPrecautions": {
+        "title": "Only {n} precaution(s)",
+        "detail": "Most practicals have three or more worth stating."
+      },
+      "precautionsTense": {
+        "title": "Write precautions as things you did",
+        "detail": "“The rider was placed at the middle of the wire”, not “the rider should be placed…”."
+      },
+      "noSources": {
+        "title": "Name your sources of error",
+        "detail": "Which effects could have made your result differ from the true value, and in which direction?"
+      },
+      "vagueSources": {
+        "title": "“Human error” isn't a source of error",
+        "detail": "Name the actual effect: parallax when reading the rule, judging the exact point of resonance, fork frequency tolerance…"
+      },
+      "noConclusion": {
+        "title": "Write a conclusion",
+        "detail": "Answer the aim in one or two sentences, with your result and its unit."
+      },
+      "conclusionNoValue": {
+        "title": "State your result in the conclusion",
+        "detail": "Include the value you obtained, with its unit."
+      }
+    },
+    "stretched": {
+      "secondHarmonic": {
+        "title": "This length is about twice what the other forks suggest",
+        "detail": "The wire may have been vibrating in its second harmonic (two loops). Keep the rider at the middle of the wire and start from a short length."
+      },
+      "halfLength": {
+        "title": "This length is about half what the other forks suggest",
+        "detail": "Check that you read the distance between the two bridges, not from one bridge to the rider."
+      },
+      "inverseInCm": {
+        "title": "1/l worked out with l in centimetres",
+        "detail": "Convert l to metres first: l = 44.6 cm = 0.446 m, so 1/l = 2.24 m⁻¹ (not 0.0224)."
+      },
+      "approachesDisagree": {
+        "title": "Your two approaches to resonance disagree",
+        "detail": "l₁ and l₂ for the same fork differ by more than 8 mm. Repeat, moving the bridge slowly near resonance."
+      },
+      "approachesIdentical": {
+        "title": "l₁ and l₂ are identical in every row",
+        "detail": "Approaching resonance from a short length and from a long length usually gives slightly different readings. Did you take both?"
+      },
+      "struckOnBench": {
+        "title": "Fork struck on the bench {n} time(s)",
+        "detail": "Striking a fork on a hard surface can damage it and produces overtones. Strike it on the rubber pad."
+      },
+      "scaleNotLength": {
+        "title": "{n} reading(s) look like the scale position, not the length",
+        "detail": "The vibrating length is the distance between the bridges: the scale reading at the movable bridge minus the fixed bridge's position ({fixed} cm)."
+      },
+      "transposed": {
+        "title": "{n} reading(s) have two digits swapped",
+        "detail": "What you wrote has the same digits as the rule showed, in a different order. Read the rule again and copy carefully."
+      }
+    }
+  },
+  "workspace": {
+    "start": {
+      "title": "How do you want to work?",
+      "perform": "Perform it on the bench",
+      "performBody": "Set up the sonometer, strike the forks and read the rule yourself. Each session has its own wire and forks.",
+      "bring": "Bring your own data",
+      "bringBody": "Type in the readings you took in a real lab and get the same analysis and feedback.",
+      "previous": "Your sessions",
+      "resume": "Resume",
+      "delete": "Delete",
+      "started": "Started {date}",
+      "stage": "at {stage}",
+      "notReady": "This practical's bench is being built. You can read the brief now; recording data opens when it is ready."
+    },
+    "progress": {
+      "stage": "Stage {current} of {total}",
+      "elapsed": "Elapsed",
+      "seed": "Session",
+      "mode": {
+        "perform": "On the bench",
+        "bring": "Your own data"
+      }
+    },
+    "panel": {
+      "instructions": "Instructions",
+      "theory": "Theory",
+      "tips": "Tips",
+      "log": "Lab log",
+      "check": "Check",
+      "noActions": "Nothing done on the bench yet.",
+      "liveTitle": "As you work",
+      "liveEmpty": "Nothing to flag on this stage yet."
+    },
+    "nav": {
+      "back": "Back",
+      "next": "Next: {stage}",
+      "previous": "Previous: {stage}"
+    },
+    "brief": {
+      "aim": "Aim",
+      "theory": "Theory",
+      "apparatus": "Apparatus",
+      "safety": "Safety",
+      "method": "Method",
+      "begin": "Go to the bench",
+      "beginBring": "Enter your data"
+    },
+    "observations": {
+      "title": "Observations",
+      "constants": "Recorded once",
+      "load": "Load M (hanger + masses)",
+      "addRow": "Add a row",
+      "removeRow": "Remove row",
+      "unit": "Unit",
+      "derivedHint": "You work these out",
+      "importCsv": "Import CSV",
+      "source": "Where was this data taken?",
+      "sourcePlaceholder": "e.g. Physics Lab 2, 14 October, group 3"
+    },
+    "graph": {
+      "title": "Graph",
+      "graphTitle": "Graph title",
+      "xAxis": "x-axis",
+      "yAxis": "y-axis",
+      "plot": "Plot",
+      "label": "Label",
+      "start": "Starts at",
+      "perSquare": "Per large square",
+      "drawLine": "Draw a line",
+      "resetLine": "Redraw line",
+      "triangle": "Slope triangle",
+      "addTriangle": "Mark triangle",
+      "hint": "Drag the ends of your line until it fits your points. Then mark a slope triangle on it.",
+      "dx": "Δx",
+      "dy": "Δy"
+    },
+    "calculate": {
+      "title": "Calculations",
+      "slope": "Slope of your line",
+      "intercept": "Intercept on the y-axis",
+      "working": "Working",
+      "fromTriangle": "From your triangle: Δy = {dy}, Δx = {dx}",
+      "result": "Your result",
+      "resultFrom": "Using your slope and your recorded load",
+      "noLine": "Draw your best-fit line on the graph first."
+    },
+    "discussion": {
+      "title": "Discussion",
+      "discussion": "Discussion",
+      "discussionHint": "Analyse and interpret your graph. Is f proportional to 1/l? What does the intercept tell you? Explain your result using the theory.",
+      "precautions": "Precautions",
+      "precautionsHint": "What did you do to make your readings reliable? One per line.",
+      "sources": "Sources of error",
+      "sourcesHint": "Which effects could make your result differ from the true value? One per line.",
+      "conclusion": "Conclusion",
+      "conclusionHint": "Answer the aim with your result and its unit."
+    },
+    "feedback": {
+      "title": "Feedback",
+      "summary": "{errors} to fix · {warnings} to check · {tips} tips",
+      "allClear": "Nothing to fix. Compare is now open.",
+      "byStage": "By stage",
+      "goTo": "Go to {stage}",
+      "unlocks": "Reading this unlocks Compare."
+    },
+    "compare": {
+      "title": "Compare",
+      "yours": "Your result",
+      "accepted": "Accepted / true value",
+      "difference": "Difference",
+      "good": "Good agreement for this practical (within {n}%).",
+      "fair": "Outside the {n}% a careful run achieves. Look at your feedback for where it crept in.",
+      "noAccepted": "No accepted value: in bring-your-data mode the wire's true μ isn't known. Compare with the value stated for your wire, or with classmates.",
+      "overlay": "Dashed: a careful run in the same apparatus",
+      "hidden": "Hidden apparatus values for this session",
+      "fork": "Fork stamped {nominal} Hz really vibrated at {actual} Hz"
+    },
+    "report": {
+      "title": "Lab report",
+      "intro": "Your report follows the 15-section format. Facts come from your session; the writing is yours.",
+      "print": "Print / save as PDF",
+      "docx": "Download Word (.docx)",
+      "export": "Export session (.vlab)",
+      "name": "Your name",
+      "missing": "Not written yet"
+    }
+  },
+  "reportSections": [
+    "Date",
+    "Title",
+    "Aim",
+    "Apparatus",
+    "Diagram",
+    "Theory",
+    "Method",
+    "Observations",
+    "Graph",
+    "Calculation",
+    "Discussion",
+    "Precautions",
+    "Sources of error",
+    "Conclusion",
+    "References"
+  ]
+}

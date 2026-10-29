@@ -1,26 +1,293 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "katex/dist/katex.min.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Design tokens
+ * ─────────────
+ * 1. TanStack DS primitive ramps + semantic tokens (tanstack.com/ds), copied verbatim.
+ * 2. Lab roles from the taste-skill "framed-sheet" app style (seed 694723330):
+ *    a tinted L-frame (rail + top bar) around a white working sheet, colour on data only.
+ *    The frame tint is a low-chroma green-grey taken from the DS green ramp (the lab bench).
+ * 3. shadcn (base-lyra) variables mapped onto the above, so every component speaks DS.
+ */
+
+@theme static {
+  --color-ds-green-100: #d8f0da;
+  --color-ds-green-200: #a2e1a9;
+  --color-ds-green-300: #69bc75;
+  --color-ds-green-400: #39af46;
+  --color-ds-green-500: #1d4226;
+
+  --color-ds-terracotta-100: #f9d8c4;
+  --color-ds-terracotta-200: #edaa8d;
+  --color-ds-terracotta-300: #e06e49;
+  --color-ds-terracotta-400: #d3481b;
+  --color-ds-terracotta-500: #5f1a06;
+
+  --color-ds-blue-100: #d8f0f3;
+  --color-ds-blue-200: #9cd5e2;
+  --color-ds-blue-300: #61adbf;
+  --color-ds-blue-400: #3aa3c4;
+  --color-ds-blue-500: #003e53;
+
+  --color-ds-amber-100: #fef6cc;
+  --color-ds-amber-200: #fae884;
+  --color-ds-amber-300: #f4d648;
+  --color-ds-amber-400: #ffa216;
+  --color-ds-amber-500: #624a00;
+
+  --color-ds-neutral-0: #ffffff;
+  --color-ds-neutral-100: #eeebd4;
+  --color-ds-neutral-150: #cec8b2;
+  --color-ds-neutral-200: #aea691;
+  --color-ds-neutral-300: #756c5b;
+  --color-ds-neutral-350: #5a5042;
+  --color-ds-neutral-400: #3e3529;
+  --color-ds-neutral-500: #111111;
+
+  /* TanStack DS type scale (subset used by the app; app screens keep titles at 18–32px). */
+  --text-ds-heading-3: 24px;
+  --text-ds-heading-3--line-height: 29px;
+  --text-ds-heading-3--font-weight: 700;
+  --text-ds-heading-4: 20px;
+  --text-ds-heading-4--line-height: 25px;
+  --text-ds-heading-4--font-weight: 700;
+  --text-ds-heading-5: 16px;
+  --text-ds-heading-5--line-height: 21px;
+  --text-ds-heading-5--font-weight: 700;
+  --text-ds-heading-6: 14px;
+  --text-ds-heading-6--line-height: 18px;
+  --text-ds-heading-6--font-weight: 500;
+  --text-ds-body-md: 16px;
+  --text-ds-body-md--line-height: 24px;
+  --text-ds-body-sm: 14px;
+  --text-ds-body-sm--line-height: 20px;
+  --text-ds-body-xs: 12px;
+  --text-ds-body-xs--line-height: 17px;
+  --text-ds-label-md: 14px;
+  --text-ds-label-md--line-height: 17px;
+  --text-ds-label-md--font-weight: 500;
+  --text-ds-label-sm: 12px;
+  --text-ds-label-sm--line-height: 14px;
+  --text-ds-label-sm--font-weight: 500;
+  --text-ds-mono-lg: 18px;
+  --text-ds-mono-lg--line-height: 27px;
+  --text-ds-mono-md: 16px;
+  --text-ds-mono-md--line-height: 24px;
+  --text-ds-mono-sm: 14px;
+  --text-ds-mono-sm--line-height: 21px;
+  --text-ds-mono-xs: 12px;
+  --text-ds-mono-xs--line-height: 16px;
+}
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* TanStack DS semantic tokens — light */
+  --text-primary: var(--color-ds-neutral-500);
+  --text-secondary: var(--color-ds-neutral-400);
+  --text-muted: var(--color-ds-neutral-350);
+  --text-accent: var(--color-ds-blue-500);
+  --text-success: var(--color-ds-green-500);
+  --text-warning: var(--color-ds-amber-500);
+  --text-error: var(--color-ds-terracotta-500);
+  --border-focus: var(--color-ds-blue-400);
+  --action-primary: var(--color-ds-blue-500);
+  --action-primary-hover: #0b5670;
+  --status-success-bg: var(--color-ds-green-100);
+  --status-warning-bg: var(--color-ds-amber-100);
+  --status-error-bg: var(--color-ds-terracotta-100);
+  --status-info-bg: var(--color-ds-blue-100);
+
+  /* Lab roles (framed-sheet) */
+  --frame: #eef1ea; /* green-grey L-frame: rail + top bar */
+  --sheet: #ffffff; /* the working sheet */
+  --well: #f5f6f2; /* the bench well inside the sheet, one step off white */
+  --sheet-edge: #e3e6de;
+  --rule: #eef0ea;
+  --data: #2f8f3c; /* the one data hue: the student's own series and readings (DS green, 3:1+ on white) */
+  --select: var(--color-ds-terracotta-400); /* the one selected thing on the bench */
+  --reference: var(--color-ds-blue-500); /* accepted / ideal values, shown only after feedback */
+  --positive: #247b50;
+  --negative: #b8321a;
+
+  /* shadcn ↔ DS */
+  --background: var(--frame);
+  --foreground: var(--text-primary);
+  --card: var(--sheet);
+  --card-foreground: var(--text-primary);
+  --popover: #ffffff;
+  --popover-foreground: var(--text-primary);
+  --primary: var(--action-primary);
+  --primary-foreground: #ffffff;
+  --secondary: #e6e9e1;
+  --secondary-foreground: var(--text-primary);
+  --muted: #f0f2ec;
+  --muted-foreground: var(--text-muted);
+  --accent: #e9ece4;
+  --accent-foreground: var(--text-primary);
+  --destructive: var(--color-ds-terracotta-400);
+  --border: var(--sheet-edge);
+  --input: #d3d7cc;
+  --ring: var(--border-focus);
+  --chart-1: var(--data);
+  --chart-2: var(--reference);
+  --chart-3: #8a6d00;
+  --chart-4: var(--color-ds-neutral-300);
+  --chart-5: var(--color-ds-neutral-200);
+  --radius: 0rem; /* Lyra: boxy, sharp corners */
+  --sidebar: var(--frame);
+  --sidebar-foreground: var(--text-secondary);
+  --sidebar-primary: var(--text-primary);
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #e0e4da;
+  --sidebar-accent-foreground: var(--text-primary);
+  --sidebar-border: var(--sheet-edge);
+  --sidebar-ring: var(--border-focus);
+}
+
+.dark {
+  --text-primary: #ffffff;
+  --text-secondary: #cec8b2;
+  --text-muted: #aea691;
+  --text-accent: #61adbf;
+  --text-success: #69bc75;
+  --text-warning: #f4d648;
+  --text-error: var(--color-ds-terracotta-200);
+  --border-focus: #61adbf;
+  --action-primary: #3aa3c4;
+  --action-primary-hover: #61adbf;
+  --status-success-bg: #1d4226;
+  --status-warning-bg: #624a00;
+  --status-error-bg: #2b1711;
+  --status-info-bg: #003e53;
+
+  --frame: #151714;
+  --sheet: #1c1e1b;
+  --well: #222520;
+  --sheet-edge: #2d302a;
+  --rule: #262924;
+  --data: #69bc75;
+  --select: var(--color-ds-terracotta-300);
+  --reference: #61adbf;
+  --positive: #69bc75;
+  --negative: #edaa8d;
+
+  --popover: #2b2b2b;
+  --primary-foreground: #ffffff;
+  --secondary: #2b2e28;
+  --muted: #252822;
+  --accent: #2b2e28;
+  --input: #3a3e36;
+  --sidebar-accent: #252822;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-plex-mono);
+  --font-heading: var(--font-bricolage);
+  --color-frame: var(--frame);
+  --color-sheet: var(--sheet);
+  --color-well: var(--well);
+  --color-sheet-edge: var(--sheet-edge);
+  --color-rule: var(--rule);
+  --color-data: var(--data);
+  --color-select: var(--select);
+  --color-reference: var(--reference);
+  --color-positive: var(--positive);
+  --color-negative: var(--negative);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-text-success: var(--text-success);
+  --color-text-warning: var(--text-warning);
+  --color-text-error: var(--text-error);
+  --color-status-success-bg: var(--status-success-bg);
+  --color-status-warning-bg: var(--status-warning-bg);
+  --color-status-error-bg: var(--status-error-bg);
+  --color-status-info-bg: var(--status-info-bg);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-background text-foreground;
+    overflow-x: hidden;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-heading);
+    letter-spacing: -0.01em;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  /* Instrument readouts and every figure the student records: one job for the mono face. */
+  .figure {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+  .num {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@media print {
+  body {
+    background: #ffffff;
+  }
+  .no-print {
+    display: none !important;
+  }
 }

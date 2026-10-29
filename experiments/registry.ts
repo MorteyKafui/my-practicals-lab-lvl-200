@@ -1,0 +1,14 @@
+import { stretchedWire } from "./stretched-wire/definition";
+import type { ExperimentDefinition } from "./types";
+
+/**
+ * Experiments whose full definition exists. A catalogue entry without a definition
+ * shows its brief and accepts no data yet.
+ */
+const DEFINITIONS: Record<string, ExperimentDefinition> = {
+  [stretchedWire.entry.id]: stretchedWire as ExperimentDefinition,
+};
+
+export function getDefinition(id: string): ExperimentDefinition | undefined {
+  return DEFINITIONS[id];
+}

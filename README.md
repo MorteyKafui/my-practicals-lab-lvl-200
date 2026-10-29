@@ -1,36 +1,35 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Physics Bench
 
-## Getting Started
+A virtual 3D physics practicals lab. Students perform practicals on an interactive bench (or bring
+their own lab data), record their own readings, plot their own graph, get feedback on what went
+wrong, and only then compare with accepted values and generate a lab report in the 15-section format.
+Offline-first PWA; work is saved on the device.
 
-First, run the development server:
+## Develop
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```sh
+bun install
+bun run dev          # http://localhost:3000
+bun run test         # unit + golden-dataset tests (bun test)
+bun run typecheck && bun run lint
+bun run build        # static export to out/ + offline service worker
+bun run preview      # serve out/ on http://localhost:4173
+bunx playwright test # end-to-end (needs the build and Chrome)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Branches
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Every new feature lands on `QA` first; `master` is updated from `QA` once it has been checked.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Adding a practical
 
-## Learn More
+Follow `.claude/skills/add-experiment/SKILL.md`. Each practical is a plugin in `experiments/<id>/`.
 
-To learn more about Next.js, take a look at the following resources:
+## Agent skills used in this project
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Third-party skills are not committed; reinstall them with:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```sh
+bunx skills add wheresryan22/anatomy --agent claude-code -y
+bunx skills add Leonxlnx/taste-skill --skill design-taste-frontend --agent claude-code -y
+```

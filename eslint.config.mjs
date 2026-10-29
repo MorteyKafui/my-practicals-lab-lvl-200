@@ -12,6 +12,10 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Vendored agent skills, their working files, and the bundled service worker.
+    ".claude/**",
+    ".taste-skill/**",
+    "pwa/.sw.bundled.js",
   ]),
 ]);
 
