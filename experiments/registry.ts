@@ -1,4 +1,6 @@
 import { acSonometer } from "./ac-sonometer/definition";
+import { resonanceTubeForks } from "./resonance-tube-forks/definition";
+import { resonanceTubeTwo } from "./resonance-tube-two/definition";
 import { stretchedWire } from "./stretched-wire/definition";
 import type { ExperimentDefinition } from "./types";
 
@@ -9,6 +11,8 @@ import type { ExperimentDefinition } from "./types";
 const DEFINITIONS: Record<string, ExperimentDefinition> = {
   [stretchedWire.entry.id]: stretchedWire as ExperimentDefinition,
   [acSonometer.entry.id]: acSonometer as ExperimentDefinition,
+  [resonanceTubeTwo.entry.id]: resonanceTubeTwo as ExperimentDefinition,
+  [resonanceTubeForks.entry.id]: resonanceTubeForks as ExperimentDefinition,
 };
 
 export function getDefinition(id: string): ExperimentDefinition | undefined {

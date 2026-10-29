@@ -31,7 +31,7 @@ export const CATALOGUE: readonly CatalogueEntry[] = [
   {
     id: "resonance-tube-two",
     topic: "acoustics",
-    status: "building",
+    status: "ready",
     apparatus: ["Resonance tube", "Water reservoir", "Tuning fork", "Thermometer", "Metre rule"],
     graph: { y: "l₂ − l₁ / m", x: "1/f / s" },
     determines: "v, velocity of sound",
@@ -39,7 +39,7 @@ export const CATALOGUE: readonly CatalogueEntry[] = [
   {
     id: "resonance-tube-forks",
     topic: "acoustics",
-    status: "building",
+    status: "ready",
     apparatus: ["Resonance tube", "Tuning forks", "Thermometer", "Metre rule"],
     graph: { y: "l / m", x: "1/f / s" },
     determines: "v and end correction e",

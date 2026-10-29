@@ -1,0 +1,102 @@
+{
+  "experiments": {
+    "resonance-tube-two": {
+      "theory": [
+        "A tube closed at the bottom by water has a node at the water surface and an antinode just beyond the open mouth. The air column resonates when its effective length is an odd number of quarter wavelengths.",
+        "$$l_1 + e = \\frac{\\lambda}{4}, \\qquad l_2 + e = \\frac{3\\lambda}{4}$$",
+        "Subtracting removes the end correction $e$: $l_2 - l_1 = \\dfrac{\\lambda}{2} = \\dfrac{v}{2f}$, so a graph of $(l_2 - l_1)$ against $1/f$ is a straight line through the origin with slope $v/2$. Each pair also gives $e = \\dfrac{l_2 - 3l_1}{2}$.",
+        "The speed of sound rises with temperature, $v = 331.3\\sqrt{1 + \\theta/273}$ m s⁻¹, so the result is corrected to 0 °C with $v_0 = v\\sqrt{\\dfrac{273}{273 + \\theta}}$."
+      ],
+      "apparatus": {
+        "tube": "Resonance tube: a glass tube on a retort stand, joined to a water reservoir by rubber tubing.",
+        "reservoir": "Reservoir: raising or lowering it sets the water level in the tube.",
+        "forks": "Set of tuning forks, 256–512 Hz, and a rubber pad.",
+        "rule": "Metre rule beside the tube, reading 0 cm at the mouth.",
+        "thermometer": "Thermometer to measure the air temperature."
+      },
+      "safety": [
+        "Clamp the tube firmly; glass tubes break if knocked.",
+        "Mop up spilt water at once."
+      ],
+      "steps": [
+        "Record the air temperature θ.",
+        "Raise the water almost to the top of the tube.",
+        "Strike a fork on the rubber pad and hold it over the mouth of the tube.",
+        "Lower the water slowly until the sound is loudest: read the length l₁ from the mouth to the water surface.",
+        "Keep lowering until the sound is loudest again: read l₂.",
+        "Repeat with each fork whose second resonance fits in the tube.",
+        "Work out l₂ − l₁, 1/f and e = (l₂ − 3l₁)/2. Plot (l₂ − l₁) against 1/f."
+      ],
+      "tips": [
+        "Strike the fork again each time: the resonance is only clear while the fork is loud.",
+        "Read the bottom of the meniscus with your eye level with the water (Eye level view).",
+        "The second resonance of the lowest forks may be below the bottom of the tube."
+      ],
+      "references": [
+        "Young, H. D. & Freedman, R. A. University Physics, ch. 16: Sound and hearing (standing waves in pipes).",
+        "Physics Bench virtual laboratory — resonance tube practical."
+      ]
+    },
+    "resonance-tube-forks": {
+      "theory": [
+        "A tube closed at the bottom by water first resonates when the air column, with its end correction $e$, is a quarter of a wavelength long:",
+        "$$l + e = \\frac{\\lambda}{4} = \\frac{v}{4f} \\quad\\Rightarrow\\quad l = \\frac{v}{4}\\cdot\\frac{1}{f} - e$$",
+        "A graph of $l$ against $1/f$ is a straight line with slope $v/4$ and intercept $-e$ on the $l$-axis. For an unflanged tube $e \\approx 0.6r$, where $r$ is the internal radius.",
+        "Correct the result to 0 °C with $v_0 = v\\sqrt{\\dfrac{273}{273 + \\theta}}$."
+      ],
+      "apparatus": {
+        "tube": "Resonance tube: a glass tube on a retort stand, joined to a water reservoir by rubber tubing.",
+        "reservoir": "Reservoir: raising or lowering it sets the water level in the tube.",
+        "forks": "Set of tuning forks, 256–512 Hz, and a rubber pad.",
+        "rule": "Metre rule beside the tube, reading 0 cm at the mouth.",
+        "thermometer": "Thermometer to measure the air temperature."
+      },
+      "safety": [
+        "Clamp the tube firmly; glass tubes break if knocked.",
+        "Mop up spilt water at once."
+      ],
+      "steps": [
+        "Record the air temperature θ.",
+        "Raise the water almost to the top of the tube.",
+        "Strike a fork on the rubber pad and hold it over the mouth.",
+        "Lower the water slowly until the sound is first loudest: record l (falling).",
+        "Lower a little further, then raise the water slowly to the loudest point again: record l (rising).",
+        "Repeat for every fork.",
+        "Work out the mean l and 1/f, then plot l against 1/f."
+      ],
+      "tips": [
+        "Start with the water high: the first loud point you meet is the first resonance.",
+        "Read the bottom of the meniscus with your eye level with the water (Eye level view).",
+        "Your intercept should be negative: it is −e."
+      ],
+      "references": [
+        "Young, H. D. & Freedman, R. A. University Physics, ch. 16: Sound and hearing (standing waves in pipes).",
+        "Physics Bench virtual laboratory — resonance tube practical."
+      ]
+    }
+  },
+  "feedback": {
+    "tube": {
+      "noTemperature": {
+        "title": "Record the air temperature",
+        "detail": "The speed of sound depends on temperature. You need θ to correct your result to 0 °C and to compare it fairly."
+      },
+      "secondResonanceRatio": {
+        "title": "l₂ is not about three times l₁",
+        "detail": "For the same fork the second resonance is near 3l₁ (a little more, because of the end correction). Check you recorded both resonances of the same fork."
+      },
+      "negativeEndCorrection": {
+        "title": "The end correction comes out negative",
+        "detail": "e = (l₂ − 3l₁)/2 should be a small positive length (about 0.6 × the tube's radius). Re-check l₁ and l₂."
+      },
+      "positiveIntercept": {
+        "title": "Your intercept is positive",
+        "detail": "Because l = v/(4f) − e, the line meets the l-axis at −e, below the origin. Check your line and your 1/f values."
+      },
+      "secondNotFirst": {
+        "title": "This length looks like the second resonance",
+        "detail": "It is about three times what the other forks suggest. Start with the water high so the first loud point you meet is the first resonance."
+      }
+    }
+  }
+}
