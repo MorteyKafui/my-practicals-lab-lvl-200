@@ -63,7 +63,7 @@ export const CATALOGUE: readonly CatalogueEntry[] = [
   {
     id: "slinky",
     topic: "electromagnetism",
-    status: "building",
+    status: "ready",
     apparatus: ["Slinky", "Power supply", "Ammeter", "Rheostat", "Hall probe", "Metre rule"],
     graph: { y: "B / T", x: "N/L / m⁻¹" },
     determines: "μ₀, permeability of free space",

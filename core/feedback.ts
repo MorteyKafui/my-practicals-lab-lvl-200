@@ -31,7 +31,7 @@ export interface TableColumn {
   source: "measured" | "given" | "derived";
   unit: string;
   instrument?: InstrumentSpec;
-  derive?: (row: Readonly<Record<string, number>>) => number;
+  derive?: (row: Readonly<Record<string, number>>, constants: Readonly<Record<string, number>>) => number;
 }
 
 export interface ParsedRow {
@@ -53,6 +53,8 @@ export interface FeedbackContext {
   /** Slope and intercept of the student's own drawn line. */
   studentLine?: { slope: number; intercept: number };
   conditions: Conditions;
+  /** Constants the student recorded once (SI). */
+  constants: Readonly<Record<string, number>>;
   actions: readonly LabAction[];
   /** Number of large squares across and up the virtual graph paper. */
   paper: { squaresX: number; squaresY: number };

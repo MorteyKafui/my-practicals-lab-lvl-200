@@ -6,6 +6,7 @@ import { useMemo, type ComponentType } from "react";
 import { AcSonometerBench } from "@/experiments/ac-sonometer/bench";
 import { HelmholtzBench } from "@/experiments/helmholtz/bench";
 import { ResonanceTubeBench } from "@/experiments/resonance-tube/bench";
+import { SlinkyBench } from "@/experiments/slinky/bench";
 import { StretchedWireBench } from "@/experiments/stretched-wire/bench-ui";
 import type { BenchProps } from "@/experiments/types";
 
@@ -20,6 +21,7 @@ const BENCHES: Record<string, ComponentType<BenchProps>> = {
   "resonance-tube-two": ResonanceTubeBench,
   "resonance-tube-forks": ResonanceTubeBench,
   helmholtz: HelmholtzBench,
+  slinky: SlinkyBench,
 };
 
 /** The bench on top, the student's notebook right under it — read the instrument, write it down. */

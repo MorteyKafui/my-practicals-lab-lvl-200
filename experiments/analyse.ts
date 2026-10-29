@@ -101,6 +101,7 @@ export function analyse(def: ExperimentDefinition, session: Session): Analysis {
     fit,
     studentLine,
     conditions,
+    constants: parseConstants(def, session),
     actions: session.actions,
     paper: PAPER,
   };

@@ -171,7 +171,7 @@ export const unitSlip: FeedbackRule = {
 export const derivedArithmetic: FeedbackRule = {
   id: "table-derived-arithmetic",
   stage: "observations",
-  check: ({ completeRows, columns }) => {
+  check: ({ completeRows, columns, constants }) => {
     const findings: Finding[] = [];
     for (const column of columns.filter((c) => c.source === "derived" && c.derive)) {
       const wrong: string[] = [];
@@ -181,7 +181,8 @@ export const derivedArithmetic: FeedbackRule = {
         if (!typed?.figure || typed.si === undefined) continue;
         const inputs: Record<string, number> = {};
         for (const [id, cell] of Object.entries(row.cells)) if (cell.si !== undefined) inputs[id] = cell.si;
-        const expectedSI = column.derive!(inputs);
+        const expectedSI = column.derive!(inputs, constants);
+        if (!Number.isFinite(expectedSI)) continue;
         const tolerance = Math.max(Math.abs(expectedSI) * 0.01, 10 ** -typed.figure.decimals * 0.6 * Math.abs(expectedSI / (typed.figure.value || 1)));
         if (Math.abs(typed.si - expectedSI) > tolerance) {
           wrong.push(row.id);

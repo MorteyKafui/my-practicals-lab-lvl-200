@@ -27,8 +27,8 @@ export interface ColumnSpec {
    */
   source: "measured" | "given" | "derived";
   instrument?: InstrumentSpec;
-  /** SI value of a derived column from the row's other SI values. */
-  derive?: (row: Readonly<Record<string, number>>) => number;
+  /** SI value of a derived column from the row's other SI values (and the recorded constants, in SI). */
+  derive?: (row: Readonly<Record<string, number>>, constants: Readonly<Record<string, number>>) => number;
 }
 
 export interface GraphSpec {

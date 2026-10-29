@@ -5,7 +5,7 @@ import { useFormatter, useTranslations } from "next-intl";
 import { useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 
-import { DIAGRAMS } from "@/components/diagrams/sonometer-diagram";
+import { DIAGRAMS } from "@/components/diagrams";
 import { GraphPaper } from "@/components/graph/graph-paper";
 import { Tex } from "@/components/tex";
 import { Button } from "@/components/ui/button";

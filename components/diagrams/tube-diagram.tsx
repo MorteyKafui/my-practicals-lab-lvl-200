@@ -1,4 +1,4 @@
-import type { DiagramProps } from "./sonometer-diagram";
+import type { DiagramProps } from "./types";
 
 /** Labelled resonance-tube set-up: tube, reservoir, rule, fork over the mouth, lengths l₁ and l₂. */
 export function TubeDiagram({ className, ref, second = true }: DiagramProps & { second?: boolean }) {

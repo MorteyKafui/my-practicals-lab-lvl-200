@@ -1,5 +1,4 @@
-import { HelmholtzDiagram } from "./helmholtz-diagram";
-import { TubeDiagram } from "./tube-diagram";
+import type { DiagramProps } from "./types";
 
 /** Labelled side view of the sonometer set-up, as a student would draw it in a report. */
 export function SonometerDiagram({ className, ref, variant = "fork" }: DiagramProps & { variant?: "fork" | "ac" }) {
@@ -58,16 +57,3 @@ export function SonometerDiagram({ className, ref, variant = "fork" }: DiagramPr
     </svg>
   );
 }
-
-export interface DiagramProps {
-  className?: string;
-  ref?: React.Ref<SVGSVGElement>;
-}
-
-export const DIAGRAMS: Record<string, (props: DiagramProps) => React.ReactNode> = {
-  "stretched-wire": SonometerDiagram,
-  "ac-sonometer": (props) => <SonometerDiagram {...props} variant="ac" />,
-  "resonance-tube-two": (props) => <TubeDiagram {...props} />,
-  "resonance-tube-forks": (props) => <TubeDiagram {...props} second={false} />,
-  helmholtz: HelmholtzDiagram,
-};

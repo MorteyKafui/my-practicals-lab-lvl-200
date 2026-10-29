@@ -1,4 +1,4 @@
-import type { DiagramProps } from "./sonometer-diagram";
+import type { DiagramProps } from "./types";
 
 /** Labelled narrow-neck resonator set-up: flask with water, loudspeaker at the mouth, signal generator. */
 export function HelmholtzDiagram({ className, ref }: DiagramProps) {

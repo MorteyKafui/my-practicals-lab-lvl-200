@@ -95,16 +95,20 @@ export function ConstantsFields({ ctx, definition }: Pick<StageProps, "ctx" | "d
               value={session.constants[c.id] ?? ""}
               onChange={(e) => update((s) => ({ ...s, constants: { ...s.constants, [c.id]: e.target.value } }))}
             />
-            <select
-              aria-label={`${t("unit")} ${c.symbol}`}
-              value={unit}
-              onChange={(e) => update((s) => ({ ...s, constantUnits: { ...s.constantUnits, [c.id]: e.target.value } }))}
-              className="figure border-b border-dashed border-text-muted bg-transparent text-ds-mono-sm outline-none"
-            >
-              {c.units.map((u) => (
-                <option key={u}>{u}</option>
-              ))}
-            </select>
+            {c.units.length > 1 ? (
+              <select
+                aria-label={`${t("unit")} ${c.symbol}`}
+                value={unit}
+                onChange={(e) => update((s) => ({ ...s, constantUnits: { ...s.constantUnits, [c.id]: e.target.value } }))}
+                className="figure border-b border-dashed border-text-muted bg-transparent text-ds-mono-sm outline-none"
+              >
+                {c.units.map((u) => (
+                  <option key={u}>{u}</option>
+                ))}
+              </select>
+            ) : (
+              <span className="figure text-ds-mono-sm text-text-muted">{unit}</span>
+            )}
             {c.id === "load" && <span className="text-ds-body-xs text-text-muted">{t("load")}</span>}
           </label>
         );
