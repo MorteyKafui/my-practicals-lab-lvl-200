@@ -265,3 +265,15 @@ test("optional AI feedback: the right request, shown to the student, refusals ha
   await page.getByRole("button", { name: "Ask Claude for feedback" }).click();
   await expect(page.getByText("Claude could not give feedback on this text.")).toBeVisible();
 });
+
+test("apparatus page opens an anatomy figure with its downloads", async ({ page, request }) => {
+  await page.goto("/apparatus");
+  await page.getByRole("link", { name: "How it works" }).first().click();
+  await expect(page).toHaveURL(/apparatus\/(sonometer|tuning-forks)/);
+  const frame = page.frameLocator("iframe");
+  await expect(frame.locator(".iso-stage")).toBeVisible();
+  for (const ext of ["svg", "png", "pdf"]) {
+    const href = await page.getByRole("link", { name: new RegExp(`\(${ext.toUpperCase()}\)`) }).getAttribute("href");
+    expect((await request.get(href!)).ok()).toBe(true);
+  }
+});

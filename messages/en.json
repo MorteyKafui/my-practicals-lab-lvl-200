@@ -807,5 +807,15 @@
       "remove": "Remove key",
       "privacy": "The key is stored only in this browser and sent only to Anthropic's API. Don't save it on a shared computer. Each request is billed to your Anthropic account."
     }
+  },
+  "apparatusPage": {
+    "intro": "{n} pieces of apparatus across the practicals. {figures} have an interactive view of how they work, to explore and download.",
+    "howItWorks": "How it works",
+    "controls": "Hover or tab into the drawing; arrow keys work the apparatus. Downloads: drawing (SVG), picture (PNG) and an A4 sheet (PDF).",
+    "download": {
+      "svg": "Drawing (SVG)",
+      "png": "Picture (PNG)",
+      "pdf": "A4 sheet (PDF)"
+    }
   }
 }
