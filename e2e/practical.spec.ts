@@ -156,3 +156,19 @@ test("bench survives toggling labels, views and leaving the stage without errors
   await page.waitForTimeout(500);
   expect(errors.filter((e) => !/Download the React DevTools/.test(e))).toEqual([]);
 });
+
+test("observation cells keep focus while typing several characters", async ({ page }) => {
+  await startBringMode(page);
+  await page.getByRole("button", { name: /Enter your data/ }).click();
+  const f = page.locator('[data-cell="f:0"]');
+  await f.click();
+  await page.keyboard.type("256", { delay: 40 });
+  await expect(f).toHaveValue("256");
+  await page.keyboard.press("Enter");
+  await page.keyboard.type("288", { delay: 40 });
+  await expect(page.locator('[data-cell="f:1"]')).toHaveValue("288");
+  const l1 = page.locator('[data-cell="l1:0"]');
+  await l1.click();
+  await page.keyboard.type("44.15", { delay: 40 });
+  await expect(l1).toHaveValue("44.15");
+});
