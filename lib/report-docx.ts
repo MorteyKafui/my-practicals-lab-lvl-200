@@ -1,24 +1,6 @@
 import { AlignmentType, BorderStyle, Document, HeadingLevel, ImageRun, Packer, Paragraph, Table, TableCell, TableRow, TextRun, WidthType } from "docx";
 
-import { texToText, type ReportModel } from "@/core/report";
-
-const SECTIONS = [
-  "Date",
-  "Title",
-  "Aim",
-  "Apparatus",
-  "Diagram",
-  "Theory",
-  "Method",
-  "Observations",
-  "Graph",
-  "Calculation",
-  "Discussion",
-  "Precautions",
-  "Sources of error",
-  "Conclusion",
-  "References",
-] as const;
+import { texToText, type ReportModel, type SectionId, type TemplateSection } from "@/core/report";
 
 /** Render an on-screen SVG (graph, diagram) to PNG bytes for embedding in Word. */
 export async function svgToPng(svg: SVGSVGElement, width = 1200): Promise<{ data: Uint8Array; width: number; height: number }> {
@@ -61,14 +43,18 @@ export async function svgToPng(svg: SVGSVGElement, width = 1200): Promise<{ data
   }
 }
 
-function heading(n: number) {
-  return new Paragraph({ heading: HeadingLevel.HEADING_2, spacing: { before: 280, after: 80 }, children: [new TextRun(`${n}. ${SECTIONS[n - 1]}`)] });
+function heading(n: number, title: string) {
+  return new Paragraph({ heading: HeadingLevel.HEADING_2, spacing: { before: 280, after: 80 }, children: [new TextRun(`${n}. ${title}`)] });
 }
 
 const para = (text: string) => new Paragraph({ spacing: { after: 80 }, children: [new TextRun(text || "—")] });
 const bullets = (items: string[]) => (items.length ? items.map((t) => new Paragraph({ bullet: { level: 0 }, children: [new TextRun(t)] })) : [para("—")]);
 
-export async function buildReportDocx(model: ReportModel, images: { diagram?: SVGSVGElement | null; graph?: SVGSVGElement | null }): Promise<Blob> {
+export async function buildReportDocx(
+  model: ReportModel,
+  images: { diagram?: SVGSVGElement | null; graph?: SVGSVGElement | null },
+  template: readonly TemplateSection[],
+): Promise<Blob> {
   const picture = async (svg: SVGSVGElement | null | undefined) => {
     if (!svg) return [para("—")];
     const png = await svgToPng(svg);
@@ -93,51 +79,35 @@ export async function buildReportDocx(model: ReportModel, images: { diagram?: SV
     ),
   });
 
+  const body: Record<SectionId, () => Promise<(Paragraph | Table)[]>> = {
+    date: async () => [para(model.date)],
+    title: async () => [para(model.title)],
+    aim: async () => [para(model.aim)],
+    apparatus: async () => bullets(model.apparatus),
+    diagram: () => picture(images.diagram),
+    theory: async () => model.theory.map((p) => para(texToText(p))),
+    method: async () => model.method.map((step, i) => para(`${i + 1}. ${step}`)),
+    observations: async () => [...model.constants.map(para), table],
+    graph: async () => [para(model.graphTitle), ...(await picture(images.graph))],
+    calculation: async () => model.calculation.map(para),
+    discussion: async () => model.discussion.split(/\n+/).map(para),
+    precautions: async () => bullets(model.precautions),
+    sources: async () => bullets(model.sourcesOfError),
+    conclusion: async () => [para(model.conclusion)],
+    references: async () => bullets(model.references),
+  };
+  const children: (Paragraph | Table)[] = [new Paragraph({ heading: HeadingLevel.TITLE, children: [new TextRun(model.title)] }), ...(model.student ? [para(model.student)] : [])];
+  let n = 0;
+  for (const section of template.filter((t) => t.include)) {
+    children.push(heading(++n, section.title), ...(await body[section.id]()));
+  }
+  children.push(new Paragraph({ spacing: { before: 400 }, children: [new TextRun({ text: model.footer, size: 16, color: "777777" })] }));
+
   const doc = new Document({
     creator: model.student || "Physics Bench",
     title: model.title,
     styles: { default: { document: { run: { font: "Calibri", size: 22 } } } },
-    sections: [
-      {
-        children: [
-          new Paragraph({ heading: HeadingLevel.TITLE, children: [new TextRun(model.title)] }),
-          ...(model.student ? [para(model.student)] : []),
-          heading(1),
-          para(model.date),
-          heading(2),
-          para(model.title),
-          heading(3),
-          para(model.aim),
-          heading(4),
-          ...bullets(model.apparatus),
-          heading(5),
-          ...(await picture(images.diagram)),
-          heading(6),
-          ...model.theory.map((p) => para(texToText(p))),
-          heading(7),
-          ...model.method.map((s, i) => para(`${i + 1}. ${s}`)),
-          heading(8),
-          ...model.constants.map(para),
-          table,
-          heading(9),
-          para(model.graphTitle),
-          ...(await picture(images.graph)),
-          heading(10),
-          ...model.calculation.map(para),
-          heading(11),
-          ...model.discussion.split(/\n+/).map(para),
-          heading(12),
-          ...bullets(model.precautions),
-          heading(13),
-          ...bullets(model.sourcesOfError),
-          heading(14),
-          para(model.conclusion),
-          heading(15),
-          ...bullets(model.references),
-          new Paragraph({ spacing: { before: 400 }, children: [new TextRun({ text: model.footer, size: 16, color: "777777" })] }),
-        ],
-      },
-    ],
+    sections: [{ children }],
   });
   return Packer.toBlob(doc);
 }

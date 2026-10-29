@@ -215,3 +215,15 @@ test("the lab log replays the session", async ({ page }) => {
   await page.getByRole("button", { name: "Replay your session" }).click();
   await expect(page.getByText("Load set to 4 kg")).toBeVisible({ timeout: 10_000 });
 });
+
+test("the report follows the school's report template", async ({ page }) => {
+  await page.goto("/settings");
+  await page.getByLabel("Title of section 3").fill("Objective");
+  await page.getByRole("checkbox", { name: "Include Theory" }).uncheck();
+  await startBringMode(page);
+  await page.getByRole("navigation", { name: "Stages" }).getByRole("button", { name: /^Report/ }).click();
+  const headings = await page.locator("article.report h3").allInnerTexts();
+  expect(headings).toContain("3. Objective");
+  expect(headings.some((h) => h.includes("Theory"))).toBe(false);
+  expect(headings).toHaveLength(14);
+});

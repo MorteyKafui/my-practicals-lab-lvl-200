@@ -75,3 +75,44 @@ export function texToText(s: string): string {
   for (const [k, v] of Object.entries(symbols)) out = out.split(k).join(v);
   return out.replace(/\^\{2\}|\^2/g, "²").replace(/[{}]/g, "").replace(/\s+/g, " ").trim();
 }
+
+/** The 15 sections of the default report format, in order. A school's template can rename, reorder or hide them. */
+export const SECTION_IDS = [
+  "date",
+  "title",
+  "aim",
+  "apparatus",
+  "diagram",
+  "theory",
+  "method",
+  "observations",
+  "graph",
+  "calculation",
+  "discussion",
+  "precautions",
+  "sources",
+  "conclusion",
+  "references",
+] as const;
+export type SectionId = (typeof SECTION_IDS)[number];
+
+export interface TemplateSection {
+  id: SectionId;
+  title: string;
+  include: boolean;
+}
+
+/** The saved template, completed with any section it is missing (so new sections never vanish). */
+export function resolveTemplate(saved: readonly TemplateSection[] | undefined, defaultTitles: readonly string[]): TemplateSection[] {
+  const known = (saved ?? []).filter((s) => (SECTION_IDS as readonly string[]).includes(s.id));
+  const missing = SECTION_IDS.filter((id) => !known.some((s) => s.id === id)).map((id) => ({
+    id,
+    title: defaultTitles[SECTION_IDS.indexOf(id)] ?? id,
+    include: true,
+  }));
+  return [...known, ...missing];
+}
+
+export function defaultTemplate(defaultTitles: readonly string[]): TemplateSection[] {
+  return resolveTemplate(undefined, defaultTitles);
+}

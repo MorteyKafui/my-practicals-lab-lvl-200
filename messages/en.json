@@ -781,5 +781,16 @@
         "recordFalse": "That claims more precision than the instrument can give: stop at the digit the scale lets you read."
       }
     }
+  },
+  "settings": {
+    "report": {
+      "title": "Report format",
+      "intro": "The default is the 15-section format. Rename, reorder or leave out sections to match your school's format; reports and Word exports follow it.",
+      "include": "Include {title}",
+      "rename": "Title of section {n}",
+      "up": "Move {title} up",
+      "down": "Move {title} down",
+      "reset": "Back to the 15-section format"
+    }
   }
 }

@@ -3,6 +3,9 @@
 import { useTheme } from "next-themes";
 
 import { Input } from "@/components/ui/input";
+import { useTranslations } from "next-intl";
+
+import { ReportTemplateEditor } from "./report-template-editor";
 import { DEFAULT_ENVIRONMENT, type Environment } from "@/core/environment";
 import { usePref, writePref } from "@/lib/prefs";
 import { cn } from "@/lib/utils";
@@ -14,6 +17,7 @@ export function SettingsForm() {
   const quality = usePref<Quality>("quality") ?? "medium";
   const env = usePref<Environment>("environment") ?? DEFAULT_ENVIRONMENT;
   const { theme, setTheme } = useTheme();
+  const tr = useTranslations("settings.report");
   const setEnv = (patch: Partial<Environment>) => writePref("environment", { ...env, ...patch });
 
   return (
@@ -75,6 +79,14 @@ export function SettingsForm() {
             />
           </div>
         </div>
+      </section>
+
+      <section aria-labelledby="s-report">
+        <h2 id="s-report" className="text-ds-heading-5">
+          {tr("title")}
+        </h2>
+        <p className="mt-1 mb-4 text-ds-body-sm text-text-muted">{tr("intro")}</p>
+        <ReportTemplateEditor />
       </section>
     </div>
   );
