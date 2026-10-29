@@ -1,4 +1,5 @@
 import { BalanceDiagram } from "./balance-diagram";
+import { FaradayDiagram } from "./faraday-diagram";
 import { HelmholtzDiagram } from "./helmholtz-diagram";
 import { SlinkyDiagram } from "./slinky-diagram";
 import { SonometerDiagram } from "./sonometer-diagram";
@@ -14,4 +15,5 @@ export const DIAGRAMS: Record<string, (props: DiagramProps) => React.ReactNode> 
   helmholtz: HelmholtzDiagram,
   slinky: SlinkyDiagram,
   "current-balance": BalanceDiagram,
+  faraday: FaradayDiagram,
 };

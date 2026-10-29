@@ -55,7 +55,7 @@ export const CATALOGUE: readonly CatalogueEntry[] = [
   {
     id: "faraday",
     topic: "electromagnetism",
-    status: "building",
+    status: "ready",
     apparatus: ["Signal generator", "Solenoid", "Search coil", "Oscilloscope", "Ammeter"],
     graph: { y: "ε₀ / V", x: "f / Hz" },
     determines: "ε ∝ dΦ/dt",
