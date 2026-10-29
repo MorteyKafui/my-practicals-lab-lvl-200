@@ -47,11 +47,11 @@ export function SettingsForm() {
         </h2>
         <Segmented
           label="Theme"
-          value={theme ?? "light"}
+          value={theme ?? "system"}
           options={[
             ["light", "Light"],
             ["dark", "Dark"],
-            ["system", "As device"],
+            ["system", "System"],
           ]}
           onChange={setTheme}
         />

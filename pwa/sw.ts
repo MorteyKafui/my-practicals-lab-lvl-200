@@ -17,7 +17,8 @@ const serwist = new Serwist({
   navigationPreload: false,
   runtimeCaching: [
     {
-      matcher: ({ request, sameOrigin }) => sameOrigin && request.destination !== "document",
+      // Vercel Analytics / Speed Insights scripts are always fetched fresh, never cached.
+      matcher: ({ request, sameOrigin, url }) => sameOrigin && request.destination !== "document" && !url.pathname.startsWith("/_vercel/"),
       handler: new CacheFirst({ cacheName: "lab-assets" }),
     },
   ],
