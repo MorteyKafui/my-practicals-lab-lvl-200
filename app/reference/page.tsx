@@ -1,3 +1,5 @@
+import { SigFigTrainer } from "@/components/lab/sigfig-trainer";
+
 export const metadata = { title: "Reference" };
 
 const REPORT: [string, string][] = [
@@ -66,6 +68,9 @@ export default function ReferencePage() {
             ))}
           </tbody>
         </table>
+        <div className="mt-8">
+          <SigFigTrainer />
+        </div>
         <h2 className="mt-8 mb-2 text-ds-heading-5">Recording readings</h2>
         <p className="text-ds-body-sm text-text-secondary">
           Record every reading to the precision of the instrument: a metre rule with millimetre divisions read in centimetres gives one decimal place (45.0 cm, not 45 cm or 45.03 cm). A result keeps about as many significant figures as the least precise reading it came from.

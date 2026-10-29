@@ -755,5 +755,31 @@
       "name": "Copper rod and clamp stands",
       "what": "Stiff conductor held rigidly"
     }
+  },
+  "reference": {
+    "trainer": {
+      "title": "Practise significant figures",
+      "score": "{right} / {total} right",
+      "count": "How many significant figures are in {number}?",
+      "round": "Round {value} to {n} significant figures.",
+      "record": "A {instrument} reads exactly {truth} {unit}. Write the reading as you would record it (number only, in {unit}).",
+      "answer": "Your answer",
+      "check": "Check",
+      "next": "Next question",
+      "shuffle": "New set",
+      "right": "Right.",
+      "wrong": "Not quite — the answer is {answer}.",
+      "why": {
+        "count": "Non-zero digits count (rule 1); zeros between them count (rule 2); trailing zeros after the decimal point count (rule 3); leading zeros never count. In standard form, only the digits before × 10ⁿ count.",
+        "notNumber": "Type a number only.",
+        "round": "Rounded, with every significant zero kept.",
+        "roundValue": "Look at the first digit you drop: 5 or more rounds the last kept digit up.",
+        "roundZeros": "The value is right but the number of figures is not: keep trailing zeros that are significant (0.500, not 0.5).",
+        "record": "Recorded to the instrument's precision.",
+        "recordValue": "That is not what the instrument shows.",
+        "recordDropped": "A reading exactly on a mark still has its last digit: write the 0 (e.g. 45.0 cm on a mm-scale rule). Dropping it throws away precision you measured.",
+        "recordFalse": "That claims more precision than the instrument can give: stop at the digit the scale lets you read."
+      }
+    }
   }
 }
